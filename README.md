@@ -1,4 +1,4 @@
-# Plugin jeedom pour les caméra SERCOMM
+# Plugin jeedom pour les caméras SERCOMM
 
 Paramétrage avancées des caméras de la marque blanche SERCOMM
 
