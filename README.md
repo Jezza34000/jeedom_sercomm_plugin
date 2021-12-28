@@ -1,11 +1,21 @@
-# Template de plugin pour Jeedom
+# Plugin jeedom pour les caméra SERCOMM
 
-Ce "template de plugin" sert de base à la réalisation de plugins pour **Jeedom**.
+Paramétrage avancées des caméras de la marque blanche SERCOMM
 
-La documentation générale relative à la conception de plugin est consultable [ici](https://doc.jeedom.com/fr_FR/dev/). Dans le détail :   
-* [Utilisation du template de plugin](https://doc.jeedom.com/fr_FR/dev/plugin_template) : Le template de plugin est une base de plugin pour Jeedom qui doit être adaptée avec l'id de votre plugin et à laquelle il suffit d'ajouter vos propres fonctions. 
-* [Fichier info.json](https://doc.jeedom.com/fr_FR/dev/structure_info_json) : Intégré depuis la version 3.0 de Jeedom, le fichier **info.json** est obligatoire pour le bon fonctionnement des plugins et leur bon déploiement sur le Market Jeedom.
-* [Icône du plugin](https://doc.jeedom.com/fr_FR/dev/Icone_de_plugin) : Afin de pouvoir être publié sur le Market Jeedom, tout plugin doit disposer d’une icône. Attention à ne pas utiliser le même code couleur que les icônes des plugins Jeedom officiels.
-* [Widget du plugin](https://doc.jeedom.com/fr_FR/dev/widget_plugin) : Présentation des différentes manières d'inclure des widgets personnalisés au plugin.
-* [Documentation du plugin](https://doc.jeedom.com/fr_FR/dev/documentation_plugin) : Présentation de la mise en place d'une documentation car un bon plugin n'est rien sans documentation adéquate.
-* [Publication du plugin](https://doc.jeedom.com/fr_FR/dev/publication_plugin) : Description des pré-requis indispensables à la publication du plugin.
+Plus connu sous les marques suivantes :
+*SFR dans la gamme : Homescope
+*FREE dans la gamme : Freebox Delta
+
+Ce plugin utilise l'API officiel du constructeur pour accéder et modifier les paramètres non accessibles via l'interface officiel du revendeur.
+
+Vous aurez notamment accès à :
+
+[MOTION] Les réglages sur la détection de mouvement
+[EVENT] Le comportement de la caméra en cas de détection d'évènement
+[NETWORK] Les configuration réseau avancées
+[HTTP] Les notification HTTP
+[RTSP_RTP] Les paramétrages des flux vidéos
+[EMAIL] L'envoi des mails
+[FTP] L'envoi vers un serveur FTP
+[AUDIO] Le paramétrage de l'audio
+[LOG] Log debug de la caméra
