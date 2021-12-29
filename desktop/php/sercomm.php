@@ -72,7 +72,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			<li role="presentation"><a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"><i class="fas fa-arrow-circle-left"></i></a></li>
 			<li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Equipement}}</a></li>
 			<li role="presentation"><a href="#commandtab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-list"></i> {{Commandes}}</a></li>
-			<li role="presentation"><a href="#events" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-bell"></i><span class="hidden-xs"> {{Evènements}}</span></a></li>
+			<li role="presentation"><a href="#events" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-exclamation"></i><span class="hidden-xs"> {{Déclencheur}}</span></a></li>
 			<li role="presentation"><a href="#httpnotify" aria-controls="home" role="tab" data-toggle="tab"><i class="fab fa-chrome"></i><span class="hidden-xs"> {{Notif HTTP}}</span></a></li>
 			<li role="presentation"><a href="#mailnotif" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-envelope-open-text"></i><span class="hidden-xs"> {{Email}}</span></a></li>
 			<li role="presentation"><a href="#ftpsend" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-file-upload"></i><span class="hidden-xs"> {{FTP}}</span></a></li>
@@ -288,7 +288,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			<div role="tabpanel" class="tab-pane" id="events">
 				<div class="col-lg-7" style="padding:10px 35px">
 						<legend>
-								<span>{{Réglage des évènements}}</span>
+								<span>{{Réglage des déclencheurs}}</span>
 						</legend>
 						<br />
 						<!-- m
@@ -299,7 +299,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 										<table class="table table-bordered table-condensed" style="text-align:center">
 												<tbody>
 														<tr style="height: 50px !important;">
-																<td><label class="control-label">{{Activer la détection d'évènements}}</label></td>
+																<td><label class="control-label">{{Activer les déclencheurs}}</label></td>
 																<td><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="event_trigger" /></td>
 														</tr>
 													</tbody>
@@ -449,7 +449,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 																<td><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="http_notify" /></td>
 														</tr>
 														<tr>
-																<td><label class="control-label">{{URL d'envoie de la notification}}</label></td>
+																<td><label class="control-label">{{URL d'envoie de la notification (n'accepte pas HTTPS)}}</label></td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_url" placeholder="{{http://my-url-to-notify.com}}"/></td>
 														</tr>
 														<tr>
@@ -462,27 +462,27 @@ $eqLogics = eqLogic::byType($plugin->getId());
 																</td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Login HTTP}}</label></td>
+																<td><label class="control-label ">{{Login (optionnel)}}</label></td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_user"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Mot de passe HTTP}}</label></td>
+																<td><label class="control-label ">{{Mot de passe (optionnel)}}</label></td>
 																<td><input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_password"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Proxy HTTP}}</label></td>
+																<td><label class="control-label ">{{Proxy (optionnel)}}</label></td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_proxy"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Port Proxy}}</label></td>
+																<td><label class="control-label ">{{Port Proxy (optionnel)}}</label></td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_proxy_no"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Login proxy}}</label></td>
+																<td><label class="control-label ">{{Login proxy (optionnel)}}</label></td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="proxy_user"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Mot de passe proxy}}</label></td>
+																<td><label class="control-label ">{{Mot de passe proxy (optionnel)}}</label></td>
 																<td><input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="proxy_password"/></td>
 														</tr>
 												</tbody>
@@ -595,7 +595,7 @@ MAIL Notif
 											<legend>
 													<span>{{Serveur SMTP secondaire}}</span>
 											</legend>
-											<label class="control-label">{{(NB : Le SMTP secondaire est utilisé en backup uniquement lorsque le SMTP primaire n'est pas accessible.)}}</label>
+											<label class="control-label">{{(Optionnel : Le SMTP secondaire est utilisé en backup uniquement lorsque le SMTP primaire n'est pas accessible.)}}</label>
 											<table class="table table-bordered table-condensed" style="text-align:center">
 													<tbody>
 															<tr style="height: 50px !important;">
@@ -755,7 +755,7 @@ MAIL Notif
 									<legend>
 											<span>{{Serveur FTP n°2}}</span>
 									</legend>
-									<label class="control-label">{{(NB : Le FTP n°2 est utilisé en backup uniquement lorsque le FTP n°1 n'est pas accessible.)}}</label>
+									<label class="control-label">{{(Optionnel : le FTP n°2 est utilisé en backup uniquement lorsque le FTP n°1 n'est pas accessible.)}}</label>
 									<table class="table table-bordered table-condensed" style="text-align:center">
 											<tbody>
 														<tr style="height: 50px !important;">
@@ -1063,19 +1063,11 @@ MAIL Notif
 														</tr>
 														<tr>
 																<td><label class="control-label">{{Volume de détection}}</label></td>
-																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="in_volume">
-																	<?php for ($i = 5; $i <= 100; $i+=5) {
-																	    echo "<option value=\"$i\">$i</option>";
-																	}?>
-																	</select></td>
+																<td><input type="range" min="0" max="100" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="in_volume"></td>
 														</tr>
 														<tr>
 																<td><label class="control-label">{{Sensibilité de détection}}</label></td>
-																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="au_trigger_volume">
-																	<?php for ($i = 1; $i <= 50; $i+=1) {
-																			echo "<option value=\"$i\">$i</option>";
-																	}?>
-																	</select></td>
+																<td><input type="range" min="2" max="50" step="2" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="au_trigger_volume"></td>
 														</tr>
 														<tr>
 																<td><label class="control-label">{{Déclencheur audio}}</label></td>

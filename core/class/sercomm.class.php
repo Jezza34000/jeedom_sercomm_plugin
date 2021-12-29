@@ -66,12 +66,12 @@ class sercomm extends eqLogic {
            }
            $info = explode('=', $row, 2);
        	  if (count($info) != 2) {
-             log::add('sercomm', 'debug', "The information row $row is not parsable");
+             log::add('sercomm', 'debug', "The information $row is not parsable");
              continue;
            }
        	  $key = trim($info[0]);
        	  $value = trim($info[1]);
-          log::add('sercomm', 'debug', "Get information key ($key) value : $value");
+          log::add('sercomm', 'debug', "Key ($key) value : $value");
 
           if(strpos($key, "event_motion") > 0 ){
               // EVENT motion specific param
@@ -212,7 +212,7 @@ class sercomm extends eqLogic {
                'md_abs_window2', 'md_abs_window3', 'md_abs_window4', 'md_threshold1', 'md_threshold2', 'md_threshold3', 'md_threshold4', 'md_sensitivity1', 'md_sensitivity2',
                'md_sensitivity3', 'md_sensitivity4', 'md_update_freq1', 'md_update_freq2', 'md_update_freq3', 'md_update_freq4');
           case 'AUDIO':
-                return array('audio_in', 'in_volume', 'in_audio_type', 'audio_mode', 'operation_mode', 'au_trigger_en', 'au_trigger_volume', 'au_trigger_method', 'in_pcm_sr', 'audio_advanced_mode', 'in_volume_again', 'audio_out', 'out_volume');
+                return array('audio_in', 'in_volume', 'in_audio_type', 'audio_mode', 'au_trigger_en', 'au_trigger_volume', 'au_trigger_method', 'audio_out', 'out_volume');
           case 'FTP':
                 return array('ftp1', 'ftp1_server', 'ftp1_account', 'ftp1_passwd', 'ftp1_path', 'ftp1_passive', 'ftp1_port', 'ftp2', 'ftp2_server', 'ftp2_account', 'ftp2_passwd', 'ftp2_path', 'ftp2_passive', 'ftp2_port');
           case 'HTTP':
@@ -292,6 +292,14 @@ class sercomm extends eqLogic {
       $sercommCmd->setSubType('other');
       $sercommCmd->setLogicalId('reboot');
       $sercommCmd->save();
+
+      $sercommCmd = new sercommCmd();
+      $sercommCmd->setName(__('Déclencher un enregistrement', __FILE__));
+      $sercommCmd->setEqLogic_id($this->id);
+      $sercommCmd->setType('action');
+      $sercommCmd->setSubType('other');
+      $sercommCmd->setLogicalId('startrec');
+      $sercommCmd->save();
     }
 
  // Fonction exécutée automatiquement avant la mise à jour de l'équipement
@@ -368,10 +376,18 @@ class sercommCmd extends cmd {
 
   // Exécution d'une commande
      public function execute($_options = array()) {
+       $eqLogic = $this->getEqLogic();
+       $eqToSendAction = $eqLogic->getlogicalId();
+       log::add('weback', 'debug', '-> Execute : '.$this->getLogicalId());
 
-
-
+        switch ($this->getLogicalId()) {
+           case 'startrec':
+              sercomm::SendTOcam("/adm/http_trigger.cgi");
+              break;
+           case 'reboot':
+              sercomm::SendTOcam("/adm/reboot.cgi");
+              break;
+         }
      }
-
     /*     * **********************Getteur Setteur*************************** */
 }
