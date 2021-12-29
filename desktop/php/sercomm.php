@@ -305,12 +305,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
 													</tbody>
 											</table>
 											<legend>
-													<span>{{Détection de mouvement}}</span>
+													<span>{{Lors de la détection de mouvement}}</span>
 											</legend>
 											<table class="table table-bordered table-condensed" style="text-align:center">
+												<label>{{Action(s) à réaliser :}}</label>
 													<tbody>
-														<tr>
-																<td><label class="control-label">{{Action(s)}}</label></td>
+														<tr style="height: 50px !important;">
 																<td><label class="control-label">{{Email}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="email1" /></td>
 																<td><label class="control-label">{{HTTP notif}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="httpn1" /></td>
 																<td><label class="control-label">{{HTTP post}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="httppost1" /></td>
@@ -320,10 +320,15 @@ $eqLogics = eqLogic::byType($plugin->getId());
 																<td><label class="control-label">{{SMBS/CIF}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="smbc_rec1" /></td>
 																<td><label class="control-label">{{SDCARD}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="sd_rec1" /></td>
 															</tr>
-															<tr>
+												</tbody>
+												</table>
+													<table class="table table-bordered table-condensed" style="text-align:center">
+														<label>{{Pièce jointe de l'évènement :}}</label>
+															<tbody>
+																<tr style="height: 50px !important;">
 																<td><label class="control-label">{{Interval}}</label></td>
 																<td>
-																		<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="file2">
+																		<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="int1">
 																			<?php for ($i = 0; $i <= 10; $i++) {
 																					echo "<option value=\"$i\">$i</option>";
 																			}?>
@@ -333,56 +338,63 @@ $eqLogics = eqLogic::byType($plugin->getId());
 																<td>
 																		<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="file1">
 																				<option value="mp4">MP4</option>
-																				<option value="jpeg">JPEG</option>
+																				<option value="avi">AVI</option>
+																				<option value="jpg">JPG</option>
 																		</select>
 																</td>
 																<td><label class="control-label">{{Enregistrement}}</td>
 																<td><label class="control-label">{{Durée avant}}</td>
-																<td></label><input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="startat1" /></td>
+																<td></label><input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="startover1" /></td>
 																<td><label class="control-label">{{Durée après}}</td>
-																<td></label><input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="stopat1" /></td>
+																<td></label><input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="endat1" /></td>
 														</tr>
 												</tbody>
 										</table>
 										<legend>
-												<span>{{Détection de bruit}}</span>
+												<span>{{Lors de la détection de bruit}}</span>
 										</legend>
 										<table class="table table-bordered table-condensed" style="text-align:center">
-											<tbody>
-												<tr>
-														<td><label class="control-label">{{Action(s)}}</label></td>
-														<td><label class="control-label">{{Email}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="email1" /></td>
-														<td><label class="control-label">{{HTTP notif}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="httpn1" /></td>
-														<td><label class="control-label">{{HTTP post}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="httppost1" /></td>
-														<td><label class="control-label">{{IM Jabber}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="im1" /></td>
-														<td><label class="control-label">{{LED}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="wlled1" /></td>
-														<td><label class="control-label">{{FTP}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="ftpu1" /></td>
-														<td><label class="control-label">{{SMBS/CIF}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="smbc_rec1" /></td>
-														<td><label class="control-label">{{SDCARD}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="sd_rec1" /></td>
-													</tr>
-													<tr>
-														<td><label class="control-label">{{Interval}}</label></td>
-														<td>
-																<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="file2">
-																	<?php for ($i = 0; $i <= 10; $i++) {
-																			echo "<option value=\"$i\">$i</option>";
-																	}?>
-																</select>
-														</td>
-														<td><label class="control-label">{{Fichier}}</label></td>
-														<td>
-																<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="file1">
+											<label>{{Action(s) à réaliser :}}</label>
+												<tbody>
+													<tr style="height: 50px !important;">
+															<td><label class="control-label">{{Email}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="email2" /></td>
+															<td><label class="control-label">{{HTTP notif}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="httpn2" /></td>
+															<td><label class="control-label">{{HTTP post}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="httppost2" /></td>
+															<td><label class="control-label">{{IM Jabber}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="im2" /></td>
+															<td><label class="control-label">{{LED}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="wlled2" /></td>
+															<td><label class="control-label">{{FTP}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="ftpu2" /></td>
+															<td><label class="control-label">{{SMBS/CIF}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="smbc_rec2" /></td>
+															<td><label class="control-label">{{SDCARD}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="sd_rec2" /></td>
+														</tr>
+											</tbody>
+											</table>
+												<table class="table table-bordered table-condensed" style="text-align:center">
+													<label>{{Pièce jointe de l'évènement :}}</label>
+														<tbody>
+															<tr style="height: 50px !important;">
+															<td><label class="control-label">{{Interval}}</label></td>
+															<td>
+																	<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="int2">
+																		<?php for ($i = 0; $i <= 10; $i++) {
+																				echo "<option value=\"$i\">$i</option>";
+																		}?>
+																	</select>
+															</td>
+															<td><label class="control-label">{{Fichier}}</label></td>
+															<td>
+																	<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="file2">
 																		<option value="mp4">MP4</option>
-																		<option value="jpeg">JPEG</option>
-																</select>
-														</td>
-														<td><label class="control-label">{{Enregistrement}}</td>
-														<td><label class="control-label">{{Durée avant}}</td>
-														<td></label><input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="startat1" /></td>
-														<td><label class="control-label">{{Durée après}}</td>
-														<td></label><input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="stopat1" /></td>
-												</tr>
-										</tbody>
+																		<option value="avi">AVI</option>
+																		<option value="jpg">JPG</option>
+																	</select>
+															</td>
+															<td><label class="control-label">{{Enregistrement}}</td>
+															<td><label class="control-label">{{Durée avant}}</td>
+															<td></label><input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="startover2" /></td>
+															<td><label class="control-label">{{Durée après}}</td>
+															<td></label><input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="endat2" /></td>
+													</tr>
+											</tbody>
 									</table>
 								</div>
 						</div>
@@ -671,7 +683,7 @@ MAIL Notif
 						<div class="container-fluid">
 								<div class="form-group">
 										<a href="javascript:void(0);" id="btSetEMAIL" onclick="SetCAMconfig('EMAIL')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
-										(Cliquez sur "Sauvegarder" avant d'envoyer la config à la caméra)
+										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
 								</div>
 								<br>
 						</div>
@@ -793,7 +805,7 @@ MAIL Notif
 						<div class="container-fluid">
 								<div class="form-group">
 										<a href="javascript:void(0);" id="btSetFTP" onclick="SetCAMconfig('FTP')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
-										(Cliquez sur "Sauvegarder" avant d'envoyer la config à la caméra)
+										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
 								</div>
 								<br>
 						</div>
@@ -859,28 +871,20 @@ MAIL Notif
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_name1"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label">{{Paramétrage}}</label></td>
+																<td><label class="control-label">{{Coordonnées fenêtre de détection}}</label></td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_window1"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Paramétrage ABS}}</label></td>
+																<td><label class="control-label ">{{Valeur ABS fenêtre}}</label></td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_abs_window1"/></td>
 														</tr>
 														<tr>
 																<td><label class="control-label ">{{Sensibilité}}</label></td>
-																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity1">
-																	<?php for ($i = 0; $i <= 10; $i++) {
-																			echo "<option value=\"$i\">$i</option>";
-																	}?>
-																	</select></td>
+																<td><input type="range" min="0" max="10" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity1"></td>
 														</tr>
 														<tr>
 																<td><label class="control-label ">{{Seuil}}</label></td>
-																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity1">
-																	<?php for ($i = 0; $i <= 255; $i+=5) {
-																			echo "<option value=\"$i\">$i</option>";
-																	}?>
-																	</select></td>
+																<td><input type="range" min="0" max="255" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_threshold1"></td>
 														</tr>
 														<tr>
 																<td><label class="control-label ">{{Fréquence de détection}}</label></td>
@@ -902,28 +906,20 @@ MAIL Notif
 															<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_name2"/></td>
 													</tr>
 													<tr>
-															<td><label class="control-label">{{Paramétrage}}</label></td>
+															<td><label class="control-label">{{Coordonnées fenêtre de détection}}</label></td>
 															<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_window2"/></td>
 													</tr>
 													<tr>
-															<td><label class="control-label ">{{Paramétrage ABS}}</label></td>
+															<td><label class="control-label ">{{Valeur ABS fenêtre}}</label></td>
 															<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_abs_window2"/></td>
 													</tr>
 													<tr>
 															<td><label class="control-label ">{{Sensibilité}}</label></td>
-															<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity2">
-																<?php for ($i = 0; $i <= 10; $i++) {
-																		echo "<option value=\"$i\">$i</option>";
-																}?>
-																</select></td>
+															<td><input type="range" min="0" max="10" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity2"></td>
 													</tr>
 													<tr>
 															<td><label class="control-label ">{{Seuil}}</label></td>
-															<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity2">
-																<?php for ($i = 0; $i <= 255; $i+=5) {
-																		echo "<option value=\"$i\">$i</option>";
-																}?>
-																</select></td>
+															<td><input type="range" min="0" max="255" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_threshold2"></td>
 													</tr>
 													<tr>
 															<td><label class="control-label ">{{Fréquence de détection}}</label></td>
@@ -945,28 +941,20 @@ MAIL Notif
 														<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_name3"/></td>
 												</tr>
 												<tr>
-														<td><label class="control-label">{{Paramétrage}}</label></td>
+														<td><label class="control-label">{{Coordonnées fenêtre de détection}}</label></td>
 														<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_window3"/></td>
 												</tr>
 												<tr>
-														<td><label class="control-label ">{{Paramétrage ABS}}</label></td>
+														<td><label class="control-label ">{{Valeur ABS fenêtre}}</label></td>
 														<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_abs_window3"/></td>
 												</tr>
 												<tr>
 														<td><label class="control-label ">{{Sensibilité}}</label></td>
-														<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity3">
-															<?php for ($i = 0; $i <= 10; $i++) {
-																	echo "<option value=\"$i\">$i</option>";
-															}?>
-															</select></td>
+														<td><input type="range" min="0" max="10" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity3"></td>
 												</tr>
 												<tr>
 														<td><label class="control-label ">{{Seuil}}</label></td>
-														<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity3">
-															<?php for ($i = 0; $i <= 255; $i+=5) {
-																	echo "<option value=\"$i\">$i</option>";
-															}?>
-															</select></td>
+														<td><input type="range" min="0" max="255" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_threshold3"></td>
 												</tr>
 												<tr>
 														<td><label class="control-label ">{{Fréquence de détection}}</label></td>
@@ -988,28 +976,20 @@ MAIL Notif
 													<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_name4"/></td>
 											</tr>
 											<tr>
-													<td><label class="control-label">{{Paramétrage}}</label></td>
+													<td><label class="control-label">{{Coordonnées fenêtre de détection}}</label></td>
 													<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_window4"/></td>
 											</tr>
 											<tr>
-													<td><label class="control-label ">{{Paramétrage ABS}}</label></td>
+													<td><label class="control-label ">{{Valeur ABS fenêtre}}</label></td>
 													<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_abs_window4"/></td>
 											</tr>
 											<tr>
 													<td><label class="control-label ">{{Sensibilité}}</label></td>
-													<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity4">
-														<?php for ($i = 0; $i <= 10; $i++) {
-																echo "<option value=\"$i\">$i</option>";
-														}?>
-														</select></td>
+													<td><input type="range" min="0" max="10" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity4"></td>
 											</tr>
 											<tr>
 													<td><label class="control-label ">{{Seuil}}</label></td>
-													<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity4">
-														<?php for ($i = 0; $i <= 255; $i+=5) {
-																echo "<option value=\"$i\">$i</option>";
-														}?>
-														</select></td>
+													<td><input type="range" min="0" max="255" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_threshold4"></td>
 											</tr>
 											<tr>
 													<td><label class="control-label ">{{Fréquence de détection}}</label></td>
@@ -1039,7 +1019,7 @@ MAIL Notif
 						<div class="container-fluid">
 								<div class="form-group">
 										<a href="javascript:void(0);" id="btSetMOTION" onclick="SetCAMconfig('MOTION')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
-										(Cliquez sur "Sauvegarder" avant d'envoyer la config à la caméra)
+										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
 								</div>
 								<br>
 						</div>
@@ -1123,7 +1103,7 @@ MAIL Notif
 						<div class="container-fluid">
 								<div class="form-group">
 										<a href="javascript:void(0);" id="btSetAUDIO" onclick="SetCAMconfig('AUDIO')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
-										(Cliquez sur "Sauvegarder" avant d'envoyer la config à la caméra)
+										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
 								</div>
 								<br>
 						</div>
@@ -1245,7 +1225,7 @@ MAIL Notif
 														<tr>
 																<td><label class="control-label">{{Ratio de l'image}}</label></td>
 																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="aspect_ratio">
-																	<?php for ($i = 0; $i <= 7; $i++) {
+																	<?php for ($i = 0; $i <= 2; $i++) {
 																			echo "<option value=\"$i\">$i</option>";
 																	}?>
 																	</select></td>
@@ -1291,7 +1271,7 @@ MAIL Notif
 						<div class="container-fluid">
 								<div class="form-group">
 										<a href="javascript:void(0);" id="btSetVIDEO" onclick="SetCAMconfig('VIDEO')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
-										(Cliquez sur "Sauvegarder" avant d'envoyer la config à la caméra)
+										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
 								</div>
 								<br>
 						</div>
@@ -1399,7 +1379,7 @@ MAIL Notif
 						<div class="container-fluid">
 								<div class="form-group">
 										<a href="javascript:void(0);" id="btSetJPEG" onclick="SetCAMconfig('JPEG')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
-										(Cliquez sur "Sauvegarder" avant d'envoyer la config à la caméra)
+										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
 								</div>
 								<br>
 						</div>
@@ -1460,7 +1440,7 @@ MAIL Notif
 						<div class="container-fluid">
 								<div class="form-group">
 										<a href="javascript:void(0);" id="btSetNETWORK" onclick="SetCAMconfig('NETWORK')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
-										(Cliquez sur "Sauvegarder" avant d'envoyer la config à la caméra)
+										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
 								</div>
 								<br>
 						</div>

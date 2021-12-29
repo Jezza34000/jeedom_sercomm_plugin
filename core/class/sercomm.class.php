@@ -96,6 +96,66 @@ class sercomm extends eqLogic {
      curl_close($ch);
    }
 
+   public function WriteEventParam(){
+     $SetGroup = true;
+     /*
+     is=1|es=0,|et=2|acts=op1:0;op2:0;email:1;ftpu:0;im:0;httpn:1;httppost:1;wlled:0;smbc:0;sd:0;op3:0;op4:0;smbc_rec:0;sd_rec:0|ei=0|ea=mp4,2,13,1|en=event_motion
+
+      is=1|
+      es=0,| SCHEDULE ? 0= all time
+      et=2|
+      acts=op1:0;op2:0;email:1;ftpu:0;im:0;httpn:1;httppost:1;wlled:0;smbc:0;sd:0;op3:0;op4:0;smbc_rec:0;sd_rec:0| ACTIONS
+      ei=0| EVENT INTERVAL ???
+      ea=mp4,2,13,1| EVENT ATTACH
+      en=event_motion EVENT TRIGGER
+      */
+
+      for ($i=1; $i<=2; $i++) {
+        $attachedFile = $this->getConfiguration('file'.$i);
+        $startover = $this->getConfiguration('startover'.$i);
+        $endat = $this->getConfiguration('endat'.$i);
+
+        $int = $this->getConfiguration('int'.$i);
+
+        $email = $this->getConfiguration('email'.$i);
+        $httpn = $this->getConfiguration('httpn'.$i);
+        $httppost = $this->getConfiguration('httppost'.$i);
+        $wlled = $this->getConfiguration('wlled'.$i);
+        $ftpu = $this->getConfiguration('ftpu'.$i);
+        $smbc_rec = $this->getConfiguration('smbc_rec'.$i);
+        $sd_rec = $this->getConfiguration('sd_rec'.$i);
+        $im = $this->getConfiguration('im'.$i);
+
+        if ($i == 1) {
+          $triggerType = "event_motion";
+        } elseif ($i == 2) {
+          $triggerType = "event_audio";
+        }
+
+        $cfgstr = "is=1|es=0,|et=2|acts=op1:0;op2:0;email:$email;ftpu:$ftpu;im:$im;httpn:$httpn;httppost:$httppost;wlled:$wlled;smbc:0;sd:0;op3:0;op4:0;smbc_rec:$smbc_rec;sd_rec:$sd_rec|ei=$int|ea=$attachedFile,$startover,$endat,1|en=$triggerType";
+
+        if ($i == 1) {
+          $cParam = "event1_entry";
+        } elseif ($i == 2) {
+          $cParam = "event2_entry";
+        }
+        log::add('sercomm', 'debug', 'Event STR to cfg ='.$cfgstr, true);
+        // Send URL
+        $res = sercomm::SendTOcam("adm/set_group.cgi?group=EVENT&event".$i."_entry=".urlencode($cfgstr));
+        log::add('sercomm', 'debug', 'Cfg URL = adm/set_group.cgi?group=EVENT&event'.$i.'_entry='.$cfgstr, true);
+          if ($res == 200) {
+            // Pass OK
+            log::add('sercomm', 'debug', '> SET OK', true);
+          } else {
+            // Pass NOK
+            $SetGroup = false;
+            log::add('sercomm', 'warning', '> NOK Error code='.$res, true);
+          }
+      }
+      return $SetGroup;
+   }
+
+
    public function WriteConfig($cfgGroup, $ParamTOconfigure)
    {
      $SetGroup = true;
@@ -111,7 +171,6 @@ class sercomm extends eqLogic {
               $value = bindec($this->getConfiguration('mailaddattachement1').$this->getConfiguration('mailaddattachement2').$this->getConfiguration('mailaddattachement3'));
               break;
            default:
-           log::add('sercomm', 'debug', 'default', true);
                 $value = urlencode($this->getConfiguration($param));
               }
        if ($value != NULL) {
