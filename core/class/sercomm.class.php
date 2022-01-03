@@ -9,58 +9,41 @@ class sercomm extends eqLogic {
 	public static $_widgetPossibility = array();
    */
 
-   public function SendTOcam($urltoSend)
+   public function ExecURL($urltoSend)
    {
-     // adm/set_group.cgi?group=WIRELESS&$property=$value
      $username = $this->getConfiguration('login');
      $password = $this->getConfiguration('password');
      $adresseIP = $this->getConfiguration('adresseip');
 
-     log::add('sercomm', 'debug', 'Send to CAM URL='.$urltoSend, true);
+     log::add('sercomm', 'debug', 'Exec URL=http://'.$adresseIP.'/'.$urltoSend, true);
      $ch = curl_init();
      curl_setopt($ch, CURLOPT_URL, "http://".$adresseIP."/".$urltoSend);
      curl_setopt($ch, CURLOPT_USERPWD, $username.":".$password);
      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
      $server_output = curl_exec($ch);
+     $curlError = curl_error($ch);
      $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
+     $result = array($httpcode, $server_output, $curlError);
      if ($httpcode == 200) {
-       log::add('sercomm', 'debug', '200 OK ='.$server_output, true);
-       return true;
+       log::add('sercomm', 'debug', 'HTTP OK (200) ='.$server_output, true);
      } else {
-       log::add('sercomm', 'debug', 'HTTP code='.$httpcode.' Err='.curl_error($ch));
-       return $httpcode;
+       log::add('sercomm', 'debug', 'HTTP NOK ('.$httpcode.') Curl ERR='.curl_error($ch));
      }
+     return $result;
      curl_close($ch);
    }
 
    public function ReadConfig($URLtoRead)
    {
-     // http://192.168.0.19/adm/get_group.cgi?group=VIDEO
-     $username = $this->getConfiguration('login');
-     $password = $this->getConfiguration('password');
-     $adresseIP = $this->getConfiguration('adresseip');
-
-     log::add('sercomm', 'debug', 'Read param CAM URL='.$URLtoRead, true);
-     $ch = curl_init();
-     curl_setopt($ch, CURLOPT_URL, "http://".$adresseIP."/".$URLtoRead);
-     curl_setopt($ch, CURLOPT_USERPWD, $username.":".$password);
-     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-     $server_output = curl_exec($ch);
-     $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-     if ($httpcode == 200) {
-       log::add('sercomm', 'debug', '200 OK ='.$server_output, true);
-
-
-         if (is_null($server_output) || empty($server_output)) {
+     $result = sercomm::ExecURL($URLtoRead);
+     if ($result[0] == 200) {
+         if (is_null($result[1]) || empty($result[1])) {
            throw new Exception(__("The command", __FILE__) . " $command " . __('has failed or not returned any string.', __FILE__));
          }
-         log::add('sercomm', 'debug', "Get information string $server_output from camera");
+         log::add('sercomm', 'debug', "Get information string $result[1] from camera");
 
-         # parse informations
          $informations = [];
-         foreach (explode(PHP_EOL, $server_output) as $row) {
+         foreach (explode(PHP_EOL, $result[1]) as $row) {
            if (empty($row)) {
              continue;
            }
@@ -73,83 +56,87 @@ class sercomm extends eqLogic {
        	  $value = trim($info[1]);
           log::add('sercomm', 'debug', "Key ($key) value : $value");
 
-          if(strpos($key, "event_motion") > 0 ){
-              // EVENT motion specific param
-          }
-          if(strpos($key, "event_audio") > 0 ){
-              // EVENT audio specific param
-          }
-
           if(strpos($key, "passw") == 0 ){
               $this->setConfiguration($key, $value);
           } else {
             log::add('sercomm', 'debug', "IGNORE update password detected ($key)");
           }
 
+          if(strpos($key, "_entry") > 0 ) {
+
+
+            $numb = preg_replace('/[^0-9]/', '', $key);
+            // Parse Trigger
+            $keyTrigger = explode("|", $value);
+            $this->setConfiguration("is".$numb, substr($keyTrigger[0],-1));
+
+            $this->setConfiguration("es".$numb, substr($keyTrigger[1],3,1));
+            $this->setConfiguration("et".$numb, substr($keyTrigger[2],-1));
+            $this->setConfiguration("ei".$numb, substr($keyTrigger[4],-1));
+            $this->setConfiguration("en".$numb, str_replace("en=", "", $keyTrigger[6]));
+
+            // ACTS
+            $keyActs = explode(";", $keyTrigger[3]);
+            $this->setConfiguration("email".$numb, substr($keyActs[2],-1));
+            $this->setConfiguration("ftpu".$numb, substr($keyActs[3],-1));
+            $this->setConfiguration("httpn".$numb, substr($keyActs[5],-1));
+            $this->setConfiguration("httppost".$numb, substr($keyActs[6],-1));
+            // Attachement
+            $kAttach = explode(",", $keyTrigger[5]);
+            $this->setConfiguration("ea".$numb, substr($kAttach[0],-3));
+            $this->setConfiguration("timebefore".$numb, $kAttach[1]);
+            $this->setConfiguration("timeafter".$numb, $kAttach[2]);
+          }
+
      	}
       $this->save();
        return true;
      } else {
-       log::add('sercomm', 'debug', 'HTTP code='.$httpcode.' Err='.curl_error($ch));
-       return $httpcode;
+       return $result[0];
      }
-     curl_close($ch);
    }
 
-   public function WriteEventParam(){
+
+
+   public function WriteEventParam() {
      $SetGroup = true;
      /*
-     is=1|es=0,|et=2|acts=op1:0;op2:0;email:1;ftpu:0;im:0;httpn:1;httppost:1;wlled:0;smbc:0;sd:0;op3:0;op4:0;smbc_rec:0;sd_rec:0|ei=0|ea=mp4,2,13,1|en=event_motion
+        is=1|es=0,|et=2|acts=op1:0;op2:0;email:1;ftpu:0;im:0;httpn:1;httppost:1;wlled:0;smbc:0;sd:0;op3:0;op4:0;smbc_rec:0;sd_rec:0|ei=0|ea=mp4,2,13,1|en=event_motion
+    */
+      for ($i=1; $i<=6; $i++) {
+        $et = $this->getConfiguration('et'.$i); //Event Trigger
+        if ($et != "") {
+          $en = $this->getConfiguration('en'.$i); //Event Name
+          $es = $this->getConfiguration('es'.$i); //Event Schedule
 
-      is=1|
-      es=0,| SCHEDULE ? 0= all time
-      et=2|
-      acts=op1:0;op2:0;email:1;ftpu:0;im:0;httpn:1;httppost:1;wlled:0;smbc:0;sd:0;op3:0;op4:0;smbc_rec:0;sd_rec:0| ACTIONS
-      ei=0| EVENT INTERVAL ???
-      ea=mp4,2,13,1| EVENT ATTACH
-      en=event_motion EVENT TRIGGER
-      */
+          $ei = $this->getConfiguration('ei'.$i); //Event Interval
+          $ea = $this->getConfiguration('ea'.$i); //Event Attachement
+          $is = $this->getConfiguration('is'.$i); // ??
 
-      for ($i=1; $i<=2; $i++) {
-        $attachedFile = $this->getConfiguration('file'.$i);
-        $startover = $this->getConfiguration('startover'.$i);
-        $endat = $this->getConfiguration('endat'.$i);
+          $email = $this->getConfiguration('email'.$i);
+          $httpn = $this->getConfiguration('httpn'.$i);
+          $httppost = $this->getConfiguration('httppost'.$i);
+          $ftpu = $this->getConfiguration('ftpu'.$i);
 
-        $int = $this->getConfiguration('int'.$i);
+          $timebefore = $this->getConfiguration('timebefore'.$i);
+          $timeafter = $this->getConfiguration('timeafter'.$i);
 
-        $email = $this->getConfiguration('email'.$i);
-        $httpn = $this->getConfiguration('httpn'.$i);
-        $httppost = $this->getConfiguration('httppost'.$i);
-        $wlled = $this->getConfiguration('wlled'.$i);
-        $ftpu = $this->getConfiguration('ftpu'.$i);
-        $smbc_rec = $this->getConfiguration('smbc_rec'.$i);
-        $sd_rec = $this->getConfiguration('sd_rec'.$i);
-        $im = $this->getConfiguration('im'.$i);
-
-        if ($i == 1) {
-          $triggerType = "event_motion";
-        } elseif ($i == 2) {
-          $triggerType = "event_audio";
+          $cfgstr = "is=$is|es=$es,|et=$et|acts=op1:0;op2:0;email:$email;ftpu:$ftpu;im:0;httpn:$httpn;httppost:$httppost;wlled:0;smbc:0;sd:0;op3:0;op4:0;smbc_rec:0;sd_rec:0|ei=$ei|ea=$ea,$timebefore,$timeafter,1|en=$en";
+          log::add('sercomm', 'debug', 'Event STR to cfg ='.$cfgstr, true);
+        } else {
+          // Erase Trigger
+          $cfgstr = "";
         }
-
-        $cfgstr = "is=1|es=0,|et=2|acts=op1:0;op2:0;email:$email;ftpu:$ftpu;im:$im;httpn:$httpn;httppost:$httppost;wlled:$wlled;smbc:0;sd:0;op3:0;op4:0;smbc_rec:$smbc_rec;sd_rec:$sd_rec|ei=$int|ea=$attachedFile,$startover,$endat,1|en=$triggerType";
-
-        if ($i == 1) {
-          $cParam = "event1_entry";
-        } elseif ($i == 2) {
-          $cParam = "event2_entry";
-        }
-        log::add('sercomm', 'debug', 'Event STR to cfg ='.$cfgstr, true);
         // Send URL
-        $res = sercomm::SendTOcam("adm/set_group.cgi?group=EVENT&event".$i."_entry=".urlencode($cfgstr));
+        $res = sercomm::ExecURL("adm/set_group.cgi?group=EVENT&event".$i."_entry=".urlencode($cfgstr));
         log::add('sercomm', 'debug', 'Cfg URL = adm/set_group.cgi?group=EVENT&event'.$i.'_entry='.$cfgstr, true);
-          if ($res == 200) {
+          if ($res[0] == 200) {
             // Pass OK
-            log::add('sercomm', 'debug', '> SET OK', true);
+            log::add('sercomm', 'debug', 'event'.$i.'_entry > SET OK', true);
           } else {
             // Pass NOK
             $SetGroup = false;
-            log::add('sercomm', 'warning', '> NOK Error code='.$res, true);
+            log::add('sercomm', 'debug', 'event'.$i.'_entry > Error set NOK', true);
           }
       }
       return $SetGroup;
@@ -158,7 +145,6 @@ class sercomm extends eqLogic {
 
    public function WriteConfig($cfgGroup, $ParamTOconfigure)
    {
-     $SetGroup = true;
      $ConcatParam = "";
      // Concat config URL
      foreach ($ParamTOconfigure as $param){
@@ -182,17 +168,12 @@ class sercomm extends eqLogic {
 
      }
      // Send URL
-     $res = sercomm::SendTOcam("adm/set_group.cgi?group=".$cfgGroup.$ConcatParam);
-     log::add('sercomm', 'debug', 'Cfg URL = adm/set_group.cgi?group='.$cfgGroup.$ConcatParam, true);
-       if ($res == 200) {
-         // Pass OK
-         log::add('sercomm', 'debug', '> SET OK', true);
+     $res = sercomm::ExecURL("adm/set_group.cgi?group=".$cfgGroup.$ConcatParam);
+       if ($res[0] == 200) {
+         return true;
        } else {
-         // Pass NOK
-         $SetGroup = false;
-         log::add('sercomm', 'warning', '> NOK Error code='.$res, true);
+         return false;
        }
-     return $SetGroup;
    }
 
    public function getParamToConfigure($group)
@@ -217,6 +198,8 @@ class sercomm extends eqLogic {
                 return array('ftp1', 'ftp1_server', 'ftp1_account', 'ftp1_passwd', 'ftp1_path', 'ftp1_passive', 'ftp1_port', 'ftp2', 'ftp2_server', 'ftp2_account', 'ftp2_passwd', 'ftp2_path', 'ftp2_passive', 'ftp2_port');
           case 'HTTP':
                 return array('http_mode', 'http_port2', 'http_port2_num', 'https_mode', 'ssport_enable', 'ssport_number');
+          case 'HTTP_EVENT':
+                return array('http_event_en', 'http_post_en', 'http_post_user', 'http_post_pass', 'http_post_url');
           case 'UPNP':
                 return array('upnp_mode', 'upnp_traversal', 'upnp_camera');
           case 'BONJOUR':
@@ -224,6 +207,10 @@ class sercomm extends eqLogic {
           case 'JPEG':
                 return array('mode', 'resolution', 'quality_level', 'frame_rate', 'sp_uri', 'mode2', 'resolution2', 'quality_level2', 'frame_rate2', 'sp_uri2', 'mode3', 'resolution3', 'quality_level3',
                 'frame_rate3', 'sp_uri3', 'bandwidth', 'cropping', 'bandwidth2', 'cropping2', 'bandwidth3', 'cropping3');
+          case 'H264':
+                return array('mode', 'resolution', 'quality_type', 'quality_level', 'bit_rate', 'frame_rate', 'gov_length', 'sp_uri', 'profile', 'mode2', 'resolution2', 'quality_type2',
+                'quality_level2', 'bit_rate2', 'frame_rate2', 'gov_length2', 'sp_uri2', 'profile2', 'mode3', 'resolution3', 'quality_type3',
+                'quality_level3', 'bit_rate3', 'frame_rate3', 'gov_length3', 'sp_uri3', 'profile3', 'bandwidth', 'cropping', 'bandwidth2', 'cropping2', 'bandwidth3', 'cropping3');
        }
    }
 

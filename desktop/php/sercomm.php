@@ -74,12 +74,14 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			<li role="presentation"><a href="#commandtab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-list"></i> {{Commandes}}</a></li>
 			<li role="presentation"><a href="#events" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-exclamation"></i><span class="hidden-xs"> {{Déclencheur}}</span></a></li>
 			<li role="presentation"><a href="#httpnotify" aria-controls="home" role="tab" data-toggle="tab"><i class="fab fa-chrome"></i><span class="hidden-xs"> {{Notif HTTP}}</span></a></li>
+			<li role="presentation"><a href="#httpevents" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-code"></i><span class="hidden-xs"> {{Evènement HTTP}}</span></a></li>
 			<li role="presentation"><a href="#mailnotif" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-envelope-open-text"></i><span class="hidden-xs"> {{Email}}</span></a></li>
 			<li role="presentation"><a href="#ftpsend" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-file-upload"></i><span class="hidden-xs"> {{FTP}}</span></a></li>
 			<li role="presentation"><a href="#motion" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-low-vision"></i><span class="hidden-xs"> {{Mouvement}}</span></a></li>
 			<li role="presentation"><a href="#audio" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-microphone"></i><span class="hidden-xs"> {{Audio}}</span></a></li>
 			<li role="presentation"><a href="#video" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-video"></i><span class="hidden-xs"> {{Vidéo}}</span></a></li>
 			<li role="presentation"><a href="#jpeg" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-camera"></i><span class="hidden-xs"> {{JPEG}}</span></a></li>
+			<li role="presentation"><a href="#h264" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-film"></i><span class="hidden-xs"> {{H264}}</span></a></li>
 			<!---<li role="presentation"><a href="#network" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-network-wired"></i><span class="hidden-xs"> {{Réseau}}</span></a></li>
 			<li role="presentation"><a href="#maintenance" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tools"></i><span class="hidden-xs"> {{Maintenance}}</span></a></li>-->
 		</ul>
@@ -304,98 +306,100 @@ $eqLogics = eqLogic::byType($plugin->getId());
 														</tr>
 													</tbody>
 											</table>
+											<?php
+											for ($i = 1; $i <= 5; $i++) {
+    											echo '
 											<legend>
-													<span>{{Lors de la détection de mouvement}}</span>
+													<span>{{Déclencheur n°'.$i.'}}</span>
 											</legend>
 											<table class="table table-bordered table-condensed" style="text-align:center">
-												<label>{{Action(s) à réaliser :}}</label>
 													<tbody>
 														<tr style="height: 50px !important;">
-																<td><label class="control-label">{{Email}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="email1" /></td>
-																<td><label class="control-label">{{HTTP notif}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="httpn1" /></td>
-																<td><label class="control-label">{{HTTP post}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="httppost1" /></td>
-																<td><label class="control-label">{{IM Jabber}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="im1" /></td>
-																<td><label class="control-label">{{LED}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="wlled1" /></td>
-																<td><label class="control-label">{{FTP}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="ftpu1" /></td>
-																<td><label class="control-label">{{SMBS/CIF}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="smbc_rec1" /></td>
-																<td><label class="control-label">{{SDCARD}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="sd_rec1" /></td>
-															</tr>
-												</tbody>
-												</table>
-													<table class="table table-bordered table-condensed" style="text-align:center">
-														<label>{{Pièce jointe de l'évènement :}}</label>
-															<tbody>
-																<tr style="height: 50px !important;">
-																<td><label class="control-label">{{Interval}}</label></td>
-																<td>
-																		<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="int1">
-																			<?php for ($i = 0; $i <= 10; $i++) {
-																					echo "<option value=\"$i\">$i</option>";
-																			}?>
-																		</select>
-																</td>
-																<td><label class="control-label">{{Fichier}}</label></td>
-																<td>
-																		<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="file1">
-																				<option value="mp4">MP4</option>
-																				<option value="avi">AVI</option>
-																				<option value="jpg">JPG</option>
-																		</select>
-																</td>
-																<td><label class="control-label">{{Enregistrement}}</td>
-																<td><label class="control-label">{{Durée avant}}</td>
-																<td></label><input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="startover1" /></td>
-																<td><label class="control-label">{{Durée après}}</td>
-																<td></label><input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="endat1" /></td>
-														</tr>
-												</tbody>
-										</table>
-										<legend>
-												<span>{{Lors de la détection de bruit}}</span>
-										</legend>
-										<table class="table table-bordered table-condensed" style="text-align:center">
-											<label>{{Action(s) à réaliser :}}</label>
-												<tbody>
-													<tr style="height: 50px !important;">
-															<td><label class="control-label">{{Email}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="email2" /></td>
-															<td><label class="control-label">{{HTTP notif}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="httpn2" /></td>
-															<td><label class="control-label">{{HTTP post}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="httppost2" /></td>
-															<td><label class="control-label">{{IM Jabber}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="im2" /></td>
-															<td><label class="control-label">{{LED}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="wlled2" /></td>
-															<td><label class="control-label">{{FTP}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="ftpu2" /></td>
-															<td><label class="control-label">{{SMBS/CIF}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="smbc_rec2" /></td>
-															<td><label class="control-label">{{SDCARD}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="sd_rec2" /></td>
-														</tr>
-											</tbody>
-											</table>
-												<table class="table table-bordered table-condensed" style="text-align:center">
-													<label>{{Pièce jointe de l'évènement :}}</label>
-														<tbody>
-															<tr style="height: 50px !important;">
-															<td><label class="control-label">{{Interval}}</label></td>
-															<td>
-																	<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="int2">
-																		<?php for ($i = 0; $i <= 10; $i++) {
-																				echo "<option value=\"$i\">$i</option>";
-																		}?>
+																<td><label class="control-label">{{Déclencheur}}</label></td>
+																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="et'.$i.'">
+																		<option value="">Désactivé</option>
+																		<option value="2">Mouvement (Fenêtre n°1)</option>
+																		<option value="10">Mouvement (Fenêtre n°2)</option>
+																		<option value="11">Mouvement (Fenêtre n°3)</option>
+																		<option value="12">Mouvement (Fenêtre n°4)</option>
+																		<option value="3">PIR</option>
+																		<option value="4">Audio</option>
+																		<option value="5">Requête HTTP</option>
+																		<option value="6">Périodique</option>
+																		<option value="7">Continu</option>
 																	</select>
+																</td>
+														</tr>
+														<tr style="height: 50px !important;">
+																<td><label class="control-label">{{Nom}}</label>
+																<td><input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="en'.$i.'" /></td>
+														</tr>
+														<tr style="height: 50px !important;">
+																<td><label class="control-label">{{Action(s) à executer}}</label></td>
+																<td>
+																	<label class="control-label">{{Email}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="email'.$i.'" />
+																	<label class="control-label">{{FTP}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="ftpu'.$i.'" />
+																	<label class="control-label">{{Notification HTTP}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="httpn'.$i.'" />
+																	<label class="control-label">{{HTTP post}}&ensp;</label><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="httppost'.$i.'" />
+																</td>
+														</tr>
+														<tr style="height: 50px !important;">
+															<td><label class="control-label">{{Intervalle}}</label></td>
+															<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ei'.$i.'">
+																		';
+																		for ($l = 0; $l <= 5; $l++) {
+																				echo "<option value=\"$l\">$l</option>";
+																		};
+																	echo '</select>
 															</td>
+														</tr>
+														<tr style="height: 50px !important;">
 															<td><label class="control-label">{{Fichier}}</label></td>
-															<td>
-																	<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="file2">
-																		<option value="mp4">MP4</option>
-																		<option value="avi">AVI</option>
-																		<option value="jpg">JPG</option>
+															<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ea'.$i.'">
+																			<option value="mp4">MP4</option>
+																			<option value="avi">AVI</option>
+																			<option value="jpg">JPG</option>
 																	</select>
 															</td>
-															<td><label class="control-label">{{Enregistrement}}</td>
-															<td><label class="control-label">{{Durée avant}}</td>
-															<td></label><input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="startover2" /></td>
-															<td><label class="control-label">{{Durée après}}</td>
-															<td></label><input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="endat2" /></td>
 													</tr>
-											</tbody>
-									</table>
+													<tr style="height: 50px !important;">
+															<td><label class="control-label">{{Durée avant}}</td>
+															<td></label><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="timebefore'.$i.'">
+																		';
+																		for ($l = 0; $l <= 15; $l++) {
+																				echo "<option value=\"$l\">$l</option>";
+																		};
+															echo '</select></td>
+													</tr>
+													<tr style="height: 50px !important;">
+															<td><label class="control-label">{{Durée après}}</td>
+															<td></label><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="timeafter'.$i.'">
+																		';
+																		for ($l = 0; $l <= 15; $l++) {
+																				echo "<option value=\"$l\">$l</option>";
+																		};
+															echo '</select></td>
+													</tr>
+													<tr style="height: 50px !important;">
+															<td><label class="control-label">{{Paramètre IS}}</td>
+															<td></label><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="is'.$i.'">
+																		';
+																		for ($l = 0; $l <= 5; $l++) {
+																				echo "<option value=\"$l\">$l</option>";
+																		};
+															echo '</select></td>
+													</tr>
+													<tr style="height: 50px !important;">
+															<td><label class="control-label">{{Planning horaire}}</td>
+															<td></label><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="es'.$i.'">
+																		<option value="0">Toujours actif</option>
+																		<option value="2">Toujours désactivé</option>
+															</select></td>
+													</tr>
+												</tbody>
+										</table>';
+									}
+									?>
 								</div>
 						</div>
 				</div>
@@ -406,13 +410,13 @@ $eqLogics = eqLogic::byType($plugin->getId());
 
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btGetMOTION" onclick="GetCAMinfo('EVENT')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
+										<a id="btGetMOTION" onclick="GetCAMinfo('EVENT')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
 								</div>
 								<br>
 						</div>
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btSetMOTION" onclick="SetCAMconfig('EVENT')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
+										<a id="btSetMOTION" onclick="SetCAMconfig('EVENT')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
 										{{(Cliquez sur "Sauvegarder" avant d'envoyer la config)}}
 								</div>
 								<br>
@@ -498,13 +502,79 @@ $eqLogics = eqLogic::byType($plugin->getId());
 						</legend>
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btGetHTTP_NOTIFY" onclick="GetCAMinfo('HTTP_NOTIFY')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
+										<a  id="btGetHTTP_NOTIFY" onclick="GetCAMinfo('HTTP_NOTIFY')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
 								</div>
 								<br>
 						</div>
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btSetHTTP_NOTIFY" onclick="SetCAMconfig('HTTP_NOTIFY')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
+										<a  id="btSetHTTP_NOTIFY" onclick="SetCAMconfig('HTTP_NOTIFY')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
+										<span style="text-align:center">{{(Cliquez sur "Sauvegarder" avant d'envoyer la config)}}</span>
+								</div>
+								<br>
+						</div>
+				</div>
+			</div>
+			<!--
+			HTTP_EVENT
+			--->
+			<div role="tabpanel" class="tab-pane" id="httpevents">
+				<div class="col-lg-7" style="padding:10px 35px">
+						<legend>
+								<span>{{Réglage des évènements HTTP}}</span>
+						</legend>
+						<br />
+						<!-- http_event_en=0
+								http_post_en=1
+								http_post_user=
+								http_post_pass=
+								http_post_url=
+								-->
+						<div class="container" style="width: 90%;">
+								<div class="form-group">
+										<!-- table  -->
+										<table class="table table-bordered table-condensed" style="text-align:center">
+												<tbody>
+														<tr style="height: 50px !important;">
+																<td><label class="control-label">{{Requète HTTP entrante (pour déclencher un enregistrement)}}</label></td>
+																<td><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="http_event_en" /></td>
+														</tr>
+														<tr style="height: 50px !important;">
+																<td><label class="control-label">{{HTTP POST (envoi des enregistrements à une URL)}}</label></td>
+																<td><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="http_post_en" /></td>
+														</tr>
+														<tr>
+																<td><label class="control-label ">{{URL d'envoi}}</label></td>
+																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_post_url"/></td>
+														</tr>
+														<tr>
+																<td><label class="control-label ">{{Login (optionnel)}}</label></td>
+																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_post_user"/></td>
+														</tr>
+														<tr>
+																<td><label class="control-label ">{{Mot de passe (optionnel)}}</label></td>
+																<td><input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_post_pass"/></td>
+														</tr>
+												</tbody>
+										</table>
+								</div>
+						</div>
+				</div>
+
+
+				<div class="col-lg-5" style="padding:15px 35px">
+						<legend>
+								<span style="text-align:left">{{Action}}</span>
+						</legend>
+						<div class="container-fluid">
+								<div class="form-group">
+										<a  id="btGetHTTP_EVENT" onclick="GetCAMinfo('HTTP_EVENT')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
+								</div>
+								<br>
+						</div>
+						<div class="container-fluid">
+								<div class="form-group">
+										<a  id="btSetHTTP_EVENT" onclick="SetCAMconfig('HTTP_EVENT')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
 										<span style="text-align:center">{{(Cliquez sur "Sauvegarder" avant d'envoyer la config)}}</span>
 								</div>
 								<br>
@@ -676,13 +746,13 @@ MAIL Notif
 						</legend>
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btGetEMAIL" onclick="GetCAMinfo('EMAIL')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
+										<a  id="btGetEMAIL" onclick="GetCAMinfo('EMAIL')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
 								</div>
 								<br>
 						</div>
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btSetEMAIL" onclick="SetCAMconfig('EMAIL')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
+										<a  id="btSetEMAIL" onclick="SetCAMconfig('EMAIL')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
 										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
 								</div>
 								<br>
@@ -798,13 +868,13 @@ MAIL Notif
 						</legend>
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btGetFTP" onclick="GetCAMinfo('FTP')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
+										<a  id="btGetFTP" onclick="GetCAMinfo('FTP')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
 								</div>
 								<br>
 						</div>
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btSetFTP" onclick="SetCAMconfig('FTP')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
+										<a  id="btSetFTP" onclick="SetCAMconfig('FTP')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
 										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
 								</div>
 								<br>
@@ -1012,13 +1082,13 @@ MAIL Notif
 
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btGetMOTION" onclick="GetCAMinfo('MOTION')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
+										<a  id="btGetMOTION" onclick="GetCAMinfo('MOTION')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
 								</div>
 								<br>
 						</div>
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btSetMOTION" onclick="SetCAMconfig('MOTION')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
+										<a  id="btSetMOTION" onclick="SetCAMconfig('MOTION')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
 										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
 								</div>
 								<br>
@@ -1088,13 +1158,13 @@ MAIL Notif
 						</legend>
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btGetAUDIO" onclick="GetCAMinfo('AUDIO')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
+										<a  id="btGetAUDIO" onclick="GetCAMinfo('AUDIO')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
 								</div>
 								<br>
 						</div>
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btSetAUDIO" onclick="SetCAMconfig('AUDIO')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
+										<a  id="btSetAUDIO" onclick="SetCAMconfig('AUDIO')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
 										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
 								</div>
 								<br>
@@ -1256,13 +1326,13 @@ MAIL Notif
 
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btGetVIDEO" onclick="GetCAMinfo('VIDEO')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
+										<a  id="btGetVIDEO" onclick="GetCAMinfo('VIDEO')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
 								</div>
 								<br>
 						</div>
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btSetVIDEO" onclick="SetCAMconfig('VIDEO')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
+										<a  id="btSetVIDEO" onclick="SetCAMconfig('VIDEO')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
 										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
 								</div>
 								<br>
@@ -1364,13 +1434,131 @@ MAIL Notif
 
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btGetJPEG" onclick="GetCAMinfo('JPEG')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
+										<a  id="btGetJPEG" onclick="GetCAMinfo('JPEG')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
 								</div>
 								<br>
 						</div>
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btSetJPEG" onclick="SetCAMconfig('JPEG')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
+										<a  id="btSetJPEG" onclick="SetCAMconfig('JPEG')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
+										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
+								</div>
+								<br>
+						</div>
+				</div>
+			</div>
+			<!--
+			JPEG
+			--->
+			<div role="tabpanel" class="tab-pane" id="h264">
+				<div class="col-lg-7" style="padding:10px 35px">
+						<legend>
+								<span>{{Réglage H264}}</span>
+						</legend>
+						<br />
+						<!--mode=1
+								resolution=3
+								quality_type=0
+								quality_level=3
+								bit_rate=2000
+								frame_rate=15
+								gov_length=15
+								sp_uri=live
+								profile=100
+								mode2=1
+								resolution2=4
+								quality_type2=0
+								quality_level2=3
+								bit_rate2=768
+								frame_rate2=15
+								gov_length2=15
+								sp_uri2=
+								profile2=100
+								mode3=0
+								resolution3=3
+								quality_type3=1
+								quality_level3=3
+								bit_rate3=1000
+								frame_rate3=15
+								gov_length3=30
+								sp_uri3=
+								profile3=100
+								bandwidth=0
+								cropping=0
+								bandwidth2=0
+								cropping2=0
+								bandwidth3=0
+								cropping3=0
+								-->
+						<div class="container" style="width: 90%;">
+								<div class="form-group">
+										<!-- table  -->
+										<table class="table table-bordered table-condensed" style="text-align:center">
+												<tbody>
+														<tr>
+																<td><label class="control-label">{{Mode 1}}</label></td>
+																<td><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="mode" /></td>
+																<td><span class="eqLogicAttr" data-l1key="configuration" data-l2key="mode_state"></span></td>
+														</tr>
+														<tr>
+																<td><label class="control-label ">{{Résolution}}</label></td>
+																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="resolution">
+																			<option value="1">160x120</option>
+																			<option value="2">320x240</option>
+																			<option value="3">640x480</option>
+																			<option value="4">1280x720</option>
+																	</select></td>
+														</tr>
+														<tr>
+																<td><label class="control-label ">{{Qualité type}}</label></td>
+																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="quality_type">
+																			<option value="0">0</option>
+																			<option value="1">1</option>
+																			<option value="2">2</option>
+																			<option value="3">3</option>
+																			<option value="4">4</option>
+																	</select></td>
+														</tr>
+														<tr>
+																<td><label class="control-label">{{Fréquence d'images (1-30)}}</label></td>
+																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="frame_rate"/></td>
+																<td><span class="eqLogicAttr" data-l1key="configuration" data-l2key="frame_rate_state"></span></td>
+														</tr>
+														<tr>
+																<td><label class="control-label ">{{Bande passante}}</label></td>
+																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bandwidth">
+																			<option value="0">Auto</option>
+																			<option value="1">64K</option>
+																			<option value="2">128K</option>
+																			<option value="3">256K</option>
+																			<option value="4">512K</option>
+																			<option value="5">768K</option>
+																			<option value="6">1024K</option>
+																			<option value="7">1.5M</option>
+																			<option value="8">2M</option>
+																	</select></td>
+																<td><span class="eqLogicAttr" data-l1key="configuration" data-l2key="bandwidth_state"></span></td>
+														</tr>
+												</tbody>
+										</table>
+								</div>
+						</div>
+				</div>
+
+				<div class="col-lg-5" style="padding:15px 35px">
+						<legend>
+								<span style="text-align:left">{{Action}}</span>
+						</legend>
+
+						<div class="container-fluid">
+								<div class="form-group">
+										<a  id="btGetJPEG" onclick="GetCAMinfo('H264')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
+								</div>
+								<br>
+						</div>
+						<div class="container-fluid">
+								<div class="form-group">
+										<a  id="btSetJPEG" onclick="SetCAMconfig('H264')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
 										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
 								</div>
 								<br>
@@ -1431,7 +1619,7 @@ MAIL Notif
 						</div>
 						<div class="container-fluid">
 								<div class="form-group">
-										<a href="javascript:void(0);" id="btSetNETWORK" onclick="SetCAMconfig('NETWORK')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
+										<a  id="btSetNETWORK" onclick="SetCAMconfig('NETWORK')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
 										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
 								</div>
 								<br>
@@ -1508,7 +1696,7 @@ MAIL Notif
 						$('#div_alert').showAlert({message: data.result, level: 'danger'});
 						return;
 					}
-					$('#div_alert').showAlert({message: '{{Lectue OK}}', level: 'success'});
+					$('#div_alert').showAlert({message: '{{Lecture OK}}', level: 'success'});
 					window.location.reload();
 				}
 			});
