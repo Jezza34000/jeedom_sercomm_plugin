@@ -1,10 +1,11 @@
-# Plugin jeedom pour les caméra SERCOMM
+# Plugin jeedom pour les caméras SERCOMM
 
 Paramétrage avancées des caméras de la marque blanche SERCOMM
 
 Plus connu sous les marques suivantes :
 - SFR dans la gamme : Homescope
 - FREE dans la gamme : Freebox Delta
+- ORANGE dans la gamme : HomeLive
 
 
 Ce plugin utilise l'API officiel du constructeur pour accéder et modifier les paramètres non accessibles via l'interface officiel du revendeur.

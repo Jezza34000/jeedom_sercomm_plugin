@@ -1,18 +1,9 @@
 {
 	"id" : "sercomm",
 	"name" : "Sercomm CAM API config",
-	"specialAttributes" : {
-		"object" : {
-			"toto" : {"name" : {"fr_FR" : "Plop je suis un attribut spécial"},"type" : "input"},
-			"toto2" : {"name" : {"fr_FR" : "Plop je suis un attribut spécial number"},"type" : "number"}
-		},
-		"user" : {
-			"toto" : {"name" : {"fr_FR" : "Plop je suis un attribut spécial"},"type" : "select","values" : [{"value" : "1", "name" : "valeur 1"},{"value" : "plop", "name" : "valeur plop"}]}
-		}
-	},
 	"description" : {
-		"fr_FR": "Plugin permettant l'accès à la configuration complètes des caméras IP de la marque blanche SERCOMM. Commercialisé notamment par SFR (SFR HomeScope) & Free (FreeboxCam) et d'autres..."
-	},
+		"fr_FR": "Plugin permettant l'accès à la configuration complètes des caméras IP de la marque blanche SERCOMM. Commercialisé notamment par : <br> - SFR avec Homescope & Home By SFR<br>
+		 - Free et son pack sécurtié de la Freebox Delta<br>- Orange avec HomeLive<br>Avec ce plugin vous aurez accès à toute l'API construcuteur."
 	"licence" : "AGPL",
 	"author" : "Jeedom SAS",
 	"require" : "3.3.39",

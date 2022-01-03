@@ -49,8 +49,12 @@ try {
         throw new Exception(__('Impossible de trouver la caméra : ' . init('id'), __FILE__));
       }
       $cfgGroup = init('group');
-      $ParamTOconfigure = $camera->getParamToConfigure($cfgGroup);
-      $res = $camera->WriteConfig($cfgGroup, $ParamTOconfigure);
+      if ($cfgGroup == 'EVENT'){
+        $res = $camera->WriteEventParam();
+      } else {
+        $ParamTOconfigure = $camera->getParamToConfigure($cfgGroup);
+        $res = $camera->WriteConfig($cfgGroup, $ParamTOconfigure);
+      }
       if ($res == true) {
         ajax::success();
       } else {
@@ -63,7 +67,7 @@ try {
       if (!is_object($camera)) {
         throw new Exception(__('Impossible de trouver la caméra : ' . init('id'), __FILE__));
       }
-      $res = $camera->ReadConfig('/adm/get_group.cgi?group='.init('group'));
+      $res = $camera->ReadConfig('adm/get_group.cgi?group='.init('group'));
       if ($res === true) {
         ajax::success();
       } else {
