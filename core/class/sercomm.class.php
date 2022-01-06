@@ -62,16 +62,23 @@ class sercomm extends eqLogic {
             log::add('sercomm', 'debug', "IGNORE update password detected ($key)");
           }
 
+          /*
+          [EVENT]
+            event_trigger=1
+            eventX_entry=is=1|es=0,|et=5|acts=op1:0;op2:0;email:0;ftpu:0;im:0;httpn:0;httppost:1;wlled:0;smbc:0;sd:0;op3:0;op4:0;smbc_rec:0;sd_rec:0|ei=0|ea=mp4,5,15,1|en=http
+            event_jpeg_fps=5
+          */
+
           if(strpos($key, "_entry") > 0 ) {
-
-
             $numb = preg_replace('/[^0-9]/', '', $key);
             // Parse Trigger
             $keyTrigger = explode("|", $value);
             $this->setConfiguration("is".$numb, substr($keyTrigger[0],-1));
 
             $this->setConfiguration("es".$numb, substr($keyTrigger[1],3,1));
-            $this->setConfiguration("et".$numb, substr($keyTrigger[2],-1));
+            $etVal = explode("=", $keyTrigger[2]);
+
+            $this->setConfiguration("et".$numb, $etVal[1]);
             $this->setConfiguration("ei".$numb, substr($keyTrigger[4],-1));
             $this->setConfiguration("en".$numb, str_replace("en=", "", $keyTrigger[6]));
 

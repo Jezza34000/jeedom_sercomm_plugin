@@ -15,6 +15,62 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
+$(document).ready(function (){
+   //Canvas
+   var canvas = document.getElementById('canvas');
+   var ctx = canvas.getContext('2d');
+   //Variables
+   var canvasx = $(canvas).offset().left;
+   var canvasy = $(canvas).offset().top;
+   var last_mousex = last_mousey = 0;
+   var mousex = mousey = 0;
+   var mousedown = false;
+
+   var adrip = $('.eqLogicAttr[data-l1key=configuration][data-l2key=adresseip]').value();
+   var log = $('.eqLogicAttr[data-l1key=configuration][data-l2key=login]').value();
+   var pwd = $('.eqLogicAttr[data-l1key=configuration][data-l2key=password]').value();
+
+   imageObj = new Image();
+   imageObj.onload = function () { ctx.drawImage(imageObj, 0, 0); };
+   imageObj.src = 'http://'+log+':'+pwd+'@'+adrip+'/img/snapshot.cgi?size=4&quality=1';
+
+   //Mousedown
+   $(canvas).on('mousedown', function(e) {
+       last_mousex = parseInt(e.clientX-canvasx);
+   		last_mousey = parseInt(e.clientY-canvasy);
+       mousedown = true;
+   });
+
+   //Mouseup
+   $(canvas).on('mouseup', function(e) {
+       mousedown = false;
+   });
+
+   //Mousemove
+   $(canvas).on('mousemove', function(e) {
+      mousex = parseInt(e.clientX-canvasx);
+   		mousey = parseInt(e.clientY-canvasy);
+      if (mousex < 0) {
+        mousex = 0;
+      }
+      if (mousey < 0) {
+        mousey = 0;
+      }
+
+      if(mousedown) {
+           ctx.clearRect(0,0,canvas.width,canvas.height); //clear canvas
+           ctx.beginPath();
+           var width = mousex-last_mousex;
+           var height = mousey-last_mousey;
+           ctx.rect(last_mousex,last_mousey,width,height);
+           ctx.drawImage(imageObj, 0, 0);
+           ctx.strokeStyle = 'red';
+           ctx.lineWidth = 2;
+           ctx.stroke();
+           $('#output').html(last_mousex+','+last_mousey+','+mousex+','+mousey+'/1280,720');
+       }
+   });
+});
 
 /* Permet la réorganisation des commandes dans l'équipement */
 $("#table_cmd").sortable({

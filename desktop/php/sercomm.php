@@ -926,151 +926,54 @@ MAIL Notif
 										<table class="table table-bordered table-condensed" style="text-align:center">
 												<tbody>
 														<tr style="height: 50px !important;">
-																<td><label class="control-label">{{Activer la déctection de mouvement}}</label></td>
+																<td><label class="control-label">{{Activer la détection de mouvement}}</label></td>
 																<td><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="md_mode" /></td>
 														</tr>
 													</tbody>
 											</table>
-											<legend>
-													<span>{{Fenetre de détection n°1}}</span>
+											<?php
+											for ($i = 1; $i <= 4; $i++) {
+													echo '<legend>
+													<span>{{Fenetre de détection n°'.$i.'}}</span>
 											</legend>
 											<table class="table table-bordered table-condensed" style="text-align:center">
 													<tbody>
 														<tr>
-																<td><label class="control-label">{{Activer}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="md_switch1" /></td>
-																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_name1"/></td>
+																<td><label class="control-label">{{Activer}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="md_switch'.$i.'" /></td>
+																<td></td>
+																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_name'.$i.'"/></td>
 														</tr>
 														<tr>
 																<td><label class="control-label">{{Coordonnées fenêtre de détection}}</label></td>
-																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_window1"/></td>
+																<td></td>
+																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_window'.$i.'"/></td>
 														</tr>
 														<tr>
 																<td><label class="control-label ">{{Valeur ABS fenêtre}}</label></td>
-																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_abs_window1"/></td>
+																<td></td>
+																<td><input type="text" id="md_abs_window1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_abs_window'.$i.'"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Sensibilité}}</label></td>
-																<td><input type="range" min="0" max="10" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity1"></td>
+																<td><label class="control-label ">{{Sensibilité (0-10)}}</label></td>
+																<td align = "right"><output id="md_sensitivity'.$i.'_val">-</output></td>
+																<td><input type="range" min="0" max="10" step="1" oninput="md_sensitivity'.$i.'_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity'.$i.'"></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Seuil}}</label></td>
-																<td><input type="range" min="0" max="255" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_threshold1"></td>
+																<td><label class="control-label ">{{Seuil (1-255)}}</label></td>
+																<td align = "right"><output id="md_threshold'.$i.'_val">-</output></td>
+																<td><input type="range" min="0" max="255" step="1" oninput="md_threshold'.$i.'_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_threshold'.$i.'"></td>
 														</tr>
 														<tr>
 																<td><label class="control-label ">{{Fréquence de détection}}</label></td>
+																<td></td>
 																<td>
-																		<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_update_freq1">
+																		<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_update_freq'.$i.'">
 																				<option value="90">90</option>
 																		</select>
 																</td>
 														</tr>
 												</tbody>
-										</table>
-										<legend>
-												<span>{{Fenetre de détection n°2}}</span>
-										</legend>
-										<table class="table table-bordered table-condensed" style="text-align:center">
-												<tbody>
-													<tr>
-															<td><label class="control-label">{{Activer}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="md_switch2" /></td>
-															<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_name2"/></td>
-													</tr>
-													<tr>
-															<td><label class="control-label">{{Coordonnées fenêtre de détection}}</label></td>
-															<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_window2"/></td>
-													</tr>
-													<tr>
-															<td><label class="control-label ">{{Valeur ABS fenêtre}}</label></td>
-															<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_abs_window2"/></td>
-													</tr>
-													<tr>
-															<td><label class="control-label ">{{Sensibilité}}</label></td>
-															<td><input type="range" min="0" max="10" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity2"></td>
-													</tr>
-													<tr>
-															<td><label class="control-label ">{{Seuil}}</label></td>
-															<td><input type="range" min="0" max="255" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_threshold2"></td>
-													</tr>
-													<tr>
-															<td><label class="control-label ">{{Fréquence de détection}}</label></td>
-															<td>
-																	<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_update_freq2">
-																			<option value="90">90</option>
-																	</select>
-															</td>
-													</tr>
-											</tbody>
-									</table>
-									<legend>
-											<span>{{Fenetre de détection n°3}}</span>
-									</legend>
-									<table class="table table-bordered table-condensed" style="text-align:center">
-											<tbody>
-												<tr>
-														<td><label class="control-label">{{Activer}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="md_switch3" /></td>
-														<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_name3"/></td>
-												</tr>
-												<tr>
-														<td><label class="control-label">{{Coordonnées fenêtre de détection}}</label></td>
-														<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_window3"/></td>
-												</tr>
-												<tr>
-														<td><label class="control-label ">{{Valeur ABS fenêtre}}</label></td>
-														<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_abs_window3"/></td>
-												</tr>
-												<tr>
-														<td><label class="control-label ">{{Sensibilité}}</label></td>
-														<td><input type="range" min="0" max="10" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity3"></td>
-												</tr>
-												<tr>
-														<td><label class="control-label ">{{Seuil}}</label></td>
-														<td><input type="range" min="0" max="255" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_threshold3"></td>
-												</tr>
-												<tr>
-														<td><label class="control-label ">{{Fréquence de détection}}</label></td>
-														<td>
-																<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_update_freq3">
-																		<option value="90">90</option>
-																</select>
-														</td>
-												</tr>
-										</tbody>
-								</table>
-								<legend>
-										<span>{{Fenetre de détection n°4}}</span>
-								</legend>
-								<table class="table table-bordered table-condensed" style="text-align:center">
-										<tbody>
-											<tr>
-													<td><label class="control-label">{{Activer}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="md_switch4" /></td>
-													<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_name4"/></td>
-											</tr>
-											<tr>
-													<td><label class="control-label">{{Coordonnées fenêtre de détection}}</label></td>
-													<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_window4"/></td>
-											</tr>
-											<tr>
-													<td><label class="control-label ">{{Valeur ABS fenêtre}}</label></td>
-													<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_abs_window4"/></td>
-											</tr>
-											<tr>
-													<td><label class="control-label ">{{Sensibilité}}</label></td>
-													<td><input type="range" min="0" max="10" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity4"></td>
-											</tr>
-											<tr>
-													<td><label class="control-label ">{{Seuil}}</label></td>
-													<td><input type="range" min="0" max="255" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_threshold4"></td>
-											</tr>
-											<tr>
-													<td><label class="control-label ">{{Fréquence de détection}}</label></td>
-													<td>
-															<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_update_freq4">
-																	<option value="90">90</option>
-															</select>
-													</td>
-											</tr>
-									</tbody>
-							</table>
+										</table>';}?>
 								</div>
 						</div>
 				</div>
@@ -1082,14 +985,38 @@ MAIL Notif
 
 						<div class="container-fluid">
 								<div class="form-group">
-										<a  id="btGetMOTION" onclick="GetCAMinfo('MOTION')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
+										<a id="btGetMOTION" onclick="GetCAMinfo('MOTION')" class="btn btn-block btn-primary eqLogicAction"><i class="fas fa-download"></i> {{Lire la configuration depuis la caméra}}</a>
 								</div>
 								<br>
 						</div>
 						<div class="container-fluid">
 								<div class="form-group">
-										<a  id="btSetMOTION" onclick="SetCAMconfig('MOTION')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
+										<a id="btSetMOTION" onclick="SetCAMconfig('MOTION')" class="btn btn-block btn-success eqLogicAction"><i class="fas fa-upload"></i> {{Envoyer la configuration dans la caméra}}</a>
 										(Cliquez sur "Sauvegarder" avant d'envoyer la config)
+								</div>
+								<br>
+						</div>
+						<legend>
+								<span style="text-align:left">{{Config fênetre détection}}</span>
+						</legend>
+						<div class="container-fluid">
+							<canvas id="canvas" width="1280" height="720" style="cursor: crosshair; border: 1px solid #000000;"></canvas>
+							Coordonnées fenêtre détection : <div id="output"></div>
+						</div>
+						<div class="container-fluid">
+								<div class="form-group">
+										<a id="btdispIMG" onclick="displayIMG()" class="btn btn-block btn-default eqLogicAction"><i class="fas fa-camera-retro"></i> {{Récupérer l'image de la caméra}}</a>
+								</div>
+								<br>
+						</div>
+						<div class="container-fluid">
+								<div class="form-group">
+									<a id="btSETwindowXY" onclick="btSETwindowXY()" class="btn btn-block btn-default eqLogicAction"><i class="fas fa-share"></i> {{Utiliser la zone de détection pour}}</a><select id="selectedWindow" class="eqLogicAttr form-control">
+												<option value="md_abs_window1">fenêtre n° 1</option>
+												<option value="md_abs_window2">fenêtre n° 2</option>
+												<option value="md_abs_window3">fenêtre n° 3</option>
+												<option value="md_abs_window4">fenêtre n° 4</option>
+										</select>
 								</div>
 								<br>
 						</div>
@@ -1223,18 +1150,22 @@ MAIL Notif
 												<tbody>
 														<tr>
 																<td><label class="control-label">{{Afficher horodatage}}</label></td>
+																<td></td>
 																<td><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="time_stamp" /></td>
 														</tr>
 														<tr>
 																<td><label class="control-label">{{Afficher texte}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="text_overlay" /></td>
+																<td></td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="text"/></td>
 														</tr>
 														<tr>
 																<td><label class="control-label">{{Retourner image}}</label></td>
+																<td></td>
 																<td><label class="control-label">{{Verticalement}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="flip" /><label class="control-label">{{Horizontalement}}</label>&ensp;<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="mirror" /></td>
 														</tr>
 														<tr>
 																<td><label class="control-label ">{{Balance des blancs}}</label></td>
+																<td></td>
 																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="color">
 																			<option value="0">Auto</option>
 																			<option value="1">Intérieur</option>
@@ -1246,46 +1177,32 @@ MAIL Notif
 														</tr>
 														<tr>
 																<td><label class="control-label">{{Exposition}}</label></td>
-																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="exposure">
-																	<?php for ($i = 1; $i <= 7; $i++) {
-																			echo "<option value=\"$i\">$i</option>";
-																	}?>
-																	</select></td>
+																<td align = "right"><output id="exposure_val">-</output></td>
+																<td><input type="range" min="1" max="7" step="1" oninput="exposure_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="exposure"></td>
 														</tr>
 														<tr>
 																<td><label class="control-label">{{Netteté}}</label></td>
-																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="sharpness">
-																	<?php for ($i = 1; $i <= 7; $i++) {
-																			echo "<option value=\"$i\">$i</option>";
-																	}?>
-																	</select></td>
+																<td align = "right"><output id="sharpness_val">-</output></td>
+																<td><input type="range" min="1" max="7" step="1" oninput="sharpness_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="sharpness"></td>
 														</tr>
 														<tr>
 																<td><label class="control-label">{{Hue}}</label></td>
-																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hue">
-																	<?php for ($i = 1; $i <= 7; $i++) {
-																			echo "<option value=\"$i\">$i</option>";
-																	}?>
-																	</select></td>
+																<td align = "right"><output id="hue_val">-</output></td>
+																<td><input type="range" min="1" max="7" step="1" oninput="hue_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hue"></td>
 														</tr>
 														<tr>
 																<td><label class="control-label">{{Saturation}}</label></td>
-																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="saturation">
-																	<?php for ($i = 1; $i <= 7; $i++) {
-																			echo "<option value=\"$i\">$i</option>";
-																	}?>
-																	</select></td>
+																<td align = "right"><output id="saturation_val">-</output></td>
+																<td><input type="range" min="1" max="7" step="1" oninput="saturation_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="saturation"></td>
 														</tr>
 														<tr>
 																<td><label class="control-label">{{Contraste}}</label></td>
-																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="contrast">
-																	<?php for ($i = 1; $i <= 7; $i++) {
-																			echo "<option value=\"$i\">$i</option>";
-																	}?>
-																	</select></td>
+																<td align = "right"><output id="contrast_val">-</output></td>
+																<td><input type="range" min="1" max="7" step="1" oninput="contrast_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="contrast"></td>
 														</tr>
 														<tr>
 																<td><label class="control-label">{{Ratio de l'image}}</label></td>
+																<td></td>
 																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="aspect_ratio">
 																	<?php for ($i = 0; $i <= 2; $i++) {
 																			echo "<option value=\"$i\">$i</option>";
@@ -1294,15 +1211,27 @@ MAIL Notif
 														</tr>
 														<tr>
 																<td><label class="control-label ">{{Vision nocturne (Led IR)}}</label></td>
+																<td></td>
 																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="dn_sch">
-																			<option value="0">Auto</option>
+																			<option value="0">Auto (suivant seuil)</option>
 																			<!--<option value="1">Planning</option>-->
 																			<option value="2">Désactivé</option>
 																			<option value="3">Toujours activé</option>
 																	</select></td>
 														</tr>
 														<tr>
+																<td><label class="control-label">{{Seuil Jour}}</label></td>
+																<td align = "right"><output id="daylevel_val">-</output></td>
+																<td><input type="range" min="45" max="80" step="5" oninput="daylevel_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="daylevel"></td>
+														</tr>
+														<tr>
+																<td><label class="control-label">{{Seuil Nuit}}</label></td>
+																<td align = "right"><output id="nightlevel_val">-</output></td>
+																<td><input type="range" min="5" max="45" step="5" oninput="nightlevel_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="nightlevel"></td>
+														</tr>
+														<tr>
 																<td><label class="control-label ">{{Délai changement nuit/jour}}</label></td>
+																<td></td>
 																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="dn_interval">
 																	<?php for ($i = 0; $i <= 10; $i++) {
 																			echo "<option value=\"$i\">$i</option>";
@@ -1311,6 +1240,7 @@ MAIL Notif
 														</tr>
 														<tr>
 																<td><label class="control-label">{{Seuil Jour/Nuit}}</label></td>
+																<td></td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="dn_threshold"/></td>
 														</tr>
 												</tbody>
@@ -1457,6 +1387,7 @@ MAIL Notif
 						</legend>
 						<br />
 						<!--mode=1
+
 								resolution=3
 								quality_type=0
 								quality_level=3
@@ -1465,6 +1396,7 @@ MAIL Notif
 								gov_length=15
 								sp_uri=live
 								profile=100
+
 								mode2=1
 								resolution2=4
 								quality_type2=0
@@ -1474,6 +1406,7 @@ MAIL Notif
 								gov_length2=15
 								sp_uri2=
 								profile2=100
+
 								mode3=0
 								resolution3=3
 								quality_type3=1
@@ -1483,6 +1416,7 @@ MAIL Notif
 								gov_length3=30
 								sp_uri3=
 								profile3=100
+
 								bandwidth=0
 								cropping=0
 								bandwidth2=0
@@ -1496,12 +1430,13 @@ MAIL Notif
 										<table class="table table-bordered table-condensed" style="text-align:center">
 												<tbody>
 														<tr>
-																<td><label class="control-label">{{Mode 1}}</label></td>
+																<td style="height: 50px !important;"><label class="control-label">{{Mode 1}}</label></td>
+																<td></td>
 																<td><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="mode" /></td>
-																<td><span class="eqLogicAttr" data-l1key="configuration" data-l2key="mode_state"></span></td>
 														</tr>
 														<tr>
 																<td><label class="control-label ">{{Résolution}}</label></td>
+																<td></td>
 																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="resolution">
 																			<option value="1">160x120</option>
 																			<option value="2">320x240</option>
@@ -1511,6 +1446,7 @@ MAIL Notif
 														</tr>
 														<tr>
 																<td><label class="control-label ">{{Qualité type}}</label></td>
+																<td></td>
 																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="quality_type">
 																			<option value="0">0</option>
 																			<option value="1">1</option>
@@ -1519,25 +1455,42 @@ MAIL Notif
 																			<option value="4">4</option>
 																	</select></td>
 														</tr>
+													</tr>
+													<tr>
+															<td><label class="control-label ">{{Niveau qualité}}</label></td>
+															<td></td>
+															<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="quality_level">
+																		<option value="0">0</option>
+																		<option value="1">1</option>
+																		<option value="2">2</option>
+																		<option value="3">3</option>
+																		<option value="4">4</option>
+																</select></td>
+													</tr>
 														<tr>
 																<td><label class="control-label">{{Fréquence d'images (1-30)}}</label></td>
-																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="frame_rate"/></td>
-																<td><span class="eqLogicAttr" data-l1key="configuration" data-l2key="frame_rate_state"></span></td>
+																<td align = "right"><output id="frame_rate_val">-</output></td>
+																<td><input type="range" min="1" max="30" oninput="frame_rate_val.value = this.value" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="frame_rate"></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Bande passante}}</label></td>
-																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bandwidth">
-																			<option value="0">Auto</option>
-																			<option value="1">64K</option>
-																			<option value="2">128K</option>
-																			<option value="3">256K</option>
-																			<option value="4">512K</option>
-																			<option value="5">768K</option>
-																			<option value="6">1024K</option>
-																			<option value="7">1.5M</option>
-																			<option value="8">2M</option>
-																	</select></td>
-																<td><span class="eqLogicAttr" data-l1key="configuration" data-l2key="bandwidth_state"></span></td>
+																<td><label class="control-label">{{GOV (1-150)}}</label></td>
+																<td align = "right"><output id="gov_length_val">-</output></td>
+																<td><input type="range" min="1" max="150" oninput="gov_length_val.value = this.value" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="gov_length"></td>
+														</tr>
+														<tr>
+																<td><label class="control-label">{{Bit rate}}</label></td>
+																<td></td>
+																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bit_rate"></td>
+														</tr>
+														<tr>
+																<td><label class="control-label">{{Profil}}</label></td>
+																<td></td>
+																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="profile"></td>
+														</tr>
+														<tr>
+																<td><label class="control-label">{{URL du stream}}</label></td>
+																<td></td>
+																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="sp_uri"></td>
 														</tr>
 												</tbody>
 										</table>
@@ -1632,6 +1585,26 @@ MAIL Notif
 </div><!-- /.row row-overflow -->
 
 <script>
+		function btSETwindowXY(){
+			var XYoutputdiv = document.getElementById('output');
+			windowXY = XYoutputdiv.innerHTML;
+			var selectWindows = document.getElementById('selectedWindow');
+			var valueWindow = selectWindows.options[selectWindows.selectedIndex].value;
+		    $('#'+valueWindow).val(windowXY);
+			}
+
+		function displayIMG() {
+			var canvas = document.getElementById('canvas');
+	    var ctx = canvas.getContext('2d');
+	    var adrip = $('.eqLogicAttr[data-l1key=configuration][data-l2key=adresseip]').value();
+	    var log = $('.eqLogicAttr[data-l1key=configuration][data-l2key=login]').value();
+	    var pwd = $('.eqLogicAttr[data-l1key=configuration][data-l2key=password]').value();
+
+	    imageObj = new Image();
+	    imageObj.onload = function () { ctx.drawImage(imageObj, 0, 0); };
+	    imageObj.src = 'http://'+adrip+'/img/snapshot.cgi?size=4&quality=1';
+		}
+
     $('#btCheckConnexion').on('click', function () {
         $.ajax({// fonction permettant de faire de l'ajax
             type: "POST", // methode de transmission des données au fichier php
