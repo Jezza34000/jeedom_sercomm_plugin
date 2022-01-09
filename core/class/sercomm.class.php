@@ -62,6 +62,14 @@ class sercomm extends eqLogic {
             log::add('sercomm', 'debug', "IGNORE update password detected ($key)");
           }
 
+          if ($key == "dn_threshold") {
+              $this->setConfiguration($key, $value);
+              $dnvalues = explode(",", $value);
+              $this->setConfiguration("nightlevel", $dnvalues[0]);
+              $this->setConfiguration("daylevel", $dnvalues[1]);
+          }
+
+
           /*
           [EVENT]
             event_trigger=1
@@ -97,10 +105,8 @@ class sercomm extends eqLogic {
 
      	}
       $this->save();
-       return true;
-     } else {
-       return $result[0];
      }
+     return $result[0];
    }
 
 
@@ -163,6 +169,9 @@ class sercomm extends eqLogic {
            case 'email_att':
               $value = bindec($this->getConfiguration('mailaddattachement1').$this->getConfiguration('mailaddattachement2').$this->getConfiguration('mailaddattachement3'));
               break;
+          case 'dn_threshold';
+              $value = urlencode($this->getConfiguration('nightlevel').",".$this->getConfiguration('daylevel'));
+              break;
            default:
                 $value = urlencode($this->getConfiguration($param));
               }
@@ -176,11 +185,7 @@ class sercomm extends eqLogic {
      }
      // Send URL
      $res = sercomm::ExecURL("adm/set_group.cgi?group=".$cfgGroup.$ConcatParam);
-       if ($res[0] == 200) {
-         return true;
-       } else {
-         return false;
-       }
+     return $res;
    }
 
    public function getParamToConfigure($group)
@@ -221,13 +226,38 @@ class sercomm extends eqLogic {
        }
    }
 
-    /*     * ***********************Methode static*************************** */
 
-    /*
-     * Fonction exécutée automatiquement toutes les minutes par Jeedom
-      public static function cron() {
+   public function getAvailability() {
+      // http://(ip)/adm/ping.cgi
+      $res = $this->ExecURL("adm/ping.cgi");
+      if ($res[0] == 200) {
+        $state = 1;
+      } else {
+        $state = 0;
       }
-     */
+      $this->checkAndUpdateCmd("available", $state);
+   }
+
+
+    /*     * ***********************Methode static*************************** */
+      public static function cron() {
+        $eqLogics = ($_eqlogic_id !== null) ? array(eqLogic::byId($_eqlogic_id)) : eqLogic::byType('sercomm', true);
+        foreach ($eqLogics as $camera) {
+          $autorefresh = $camera->getConfiguration('autorefresh','*/15 * * * *');
+          if ($autorefresh != '') {
+            try {
+              $c = new Cron\CronExpression(checkAndFixCron($autorefresh), new Cron\FieldFactory);
+              if ($c->isDue()) {
+                log::add('sercomm', 'debug', 'CRON refresh '.$camera->getHumanName());
+                $camera->getAvailability();
+              }
+            } catch (Exception $exc) {
+              log::add('sercomm', 'error', __('Expression cron non valide pour ', __FILE__) . $camera->getHumanName() . ' : ' . $autorefresh);
+            }
+          }
+        }
+      }
+
 
     /*
      * Fonction exécutée automatiquement toutes les 5 minutes par Jeedom
@@ -271,20 +301,38 @@ class sercomm extends eqLogic {
     }
  // Fonction exécutée automatiquement après la création de l'équipement
     public function postInsert() {
+
+      $Order = 0;
+
       $sercommCmd = new sercommCmd();
       $sercommCmd->setName(__('Rafraichir', __FILE__));
       $sercommCmd->setEqLogic_id($this->id);
       $sercommCmd->setType('action');
       $sercommCmd->setSubType('other');
       $sercommCmd->setLogicalId('refresh');
+      $sercommCmd->setOrder($Order);
       $sercommCmd->save();
+      $Order++;
 
       $sercommCmd = new sercommCmd();
-      $sercommCmd->setName(__('Redémarrer', __FILE__));
+      $sercommCmd->setName(__('Disponible', __FILE__));
+      $sercommCmd->setEqLogic_id($this->id);
+      $sercommCmd->setType('info');
+      $sercommCmd->setSubType('binary');
+      $sercommCmd->setLogicalId('available');
+      $sercommCmd->setOrder($Order);
+      $sercommCmd->save();
+      $Order++;
+
+      $sercommCmd = new sercommCmd();
+      $sercommCmd->setName(__('Déclencheur', __FILE__));
       $sercommCmd->setEqLogic_id($this->id);
       $sercommCmd->setType('action');
-      $sercommCmd->setSubType('other');
-      $sercommCmd->setLogicalId('reboot');
+      $sercommCmd->setSubType('select');
+      $sercommCmd->setConfiguration('option', 'select');
+      $sercommCmd->setConfiguration('listValue', '1|Activé;0|Désactivé');
+      $sercommCmd->setLogicalId('trigger');
+      $sercommCmd->setOrder($Order);
       $sercommCmd->save();
 
       $sercommCmd = new sercommCmd();
@@ -293,7 +341,31 @@ class sercomm extends eqLogic {
       $sercommCmd->setType('action');
       $sercommCmd->setSubType('other');
       $sercommCmd->setLogicalId('startrec');
+      $sercommCmd->setOrder($Order);
       $sercommCmd->save();
+      $Order++;
+
+      $sercommCmd = new sercommCmd();
+      $sercommCmd->setName(__('Envoyer la config', __FILE__));
+      $sercommCmd->setEqLogic_id($this->id);
+      $sercommCmd->setType('action');
+      $sercommCmd->setSubType('select');
+      $sercommCmd->setConfiguration('option', 'select');
+      $sercommCmd->setConfiguration('listValue', 'EVENT|Déclencheur;MOTION|Mouvement;HTTP_EVENT|Evènement HTTP;HTTP_NOTIFY|Notif HTTP;VIDEO|Vidéo;AUDIO|Audio;FTP|FTP;EMAIL|Email');
+      $sercommCmd->setLogicalId('sendparam');
+      $sercommCmd->setOrder($Order);
+      $sercommCmd->save();
+      $Order++;
+
+      $sercommCmd = new sercommCmd();
+      $sercommCmd->setName(__('Redémarrer', __FILE__));
+      $sercommCmd->setEqLogic_id($this->id);
+      $sercommCmd->setType('action');
+      $sercommCmd->setSubType('other');
+      $sercommCmd->setLogicalId('reboot');
+      $sercommCmd->setOrder($Order);
+      $sercommCmd->save();
+      $Order++;
     }
 
  // Fonction exécutée automatiquement avant la mise à jour de l'équipement
@@ -370,17 +442,54 @@ class sercommCmd extends cmd {
 
   // Exécution d'une commande
      public function execute($_options = array()) {
-       $eqLogic = $this->getEqLogic();
-       $eqToSendAction = $eqLogic->getlogicalId();
-       log::add('weback', 'debug', '-> Execute : '.$this->getLogicalId());
+       $EqlogicId = $this->getEqLogic_id();
+       $camera = sercomm::byId($EqlogicId);
+       if (!is_object($camera)) {
+         throw new Exception(__('Impossible de trouver la caméra : ' . $EqlogicId, __FILE__));
+       }
+       log::add('sercomm', 'debug', '-> Execute : '.$this->getLogicalId());
 
         switch ($this->getLogicalId()) {
+          case 'refresh':
+                $camera->getAvailability();
+                break;
            case 'startrec':
-              sercomm::SendTOcam("/adm/http_trigger.cgi");
-              break;
+                $res = $camera->ExecURL("adm/http_trigger.cgi");
+                if ($res[1] == "OK") {
+
+                } else {
+                  throw new Exception(__('Erreur, l\'option HTTP trigger n\'est pas activé, ou la caméra n\'est pas disponible', __FILE__));
+                }
+                break;
            case 'reboot':
-              sercomm::SendTOcam("/adm/reboot.cgi");
-              break;
+                $res = $camera->ExecURL("adm/reboot.cgi");
+                if ($res[1] == "OK") {
+                } else {
+                  throw new Exception(__('Erreur ordre non envoyé', __FILE__));
+                }
+                break;
+            case 'sendparam':
+                $cfgGroup = $_options['select'];
+                $ParamTOconfigure = $camera->getParamToConfigure($cfgGroup);
+                $res = $camera->WriteConfig($cfgGroup, $ParamTOconfigure);
+                if ($res[1] == "OK") {
+
+                } else {
+                 throw new Exception(__('Impossible de configurer la caméra', __FILE__));
+                }
+                break;
+            case 'trigger':
+                if ($_options['select'] == 1) {
+                  $triggState = 1;
+                } else {
+                  $triggState = 0;
+                }
+                $res = $camera->ExecURL("adm/set_group.cgi?group=EVENT&event_trigger=$triggState");
+                if ($res[1] == "OK") {
+                } else {
+                  throw new Exception(__('Impossible de configurer la caméra', __FILE__));
+                }
+                break;
          }
      }
     /*     * **********************Getteur Setteur*************************** */

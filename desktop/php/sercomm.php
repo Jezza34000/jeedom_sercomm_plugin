@@ -169,6 +169,15 @@ $eqLogics = eqLogic::byType($plugin->getId());
 									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="port" placeholder="{{80}}"/>
 								</div>
 							</div>
+							<div class="form-group expertModeVisible">
+								<label class="col-sm-3 control-label">{{Auto-actualisation (cron)}}</label>
+									<div class="col-sm-3">
+										<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="autorefresh" placeholder="*/15 * * * *"/>
+									</div>
+									<div class="col-sm-1">
+										<i class="fas fa-question-circle cursor floatright" id="bt_cronGenerator"></i>
+									</div>
+							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{}}</label>
 								<div class="col-sm-3">
@@ -318,15 +327,22 @@ $eqLogics = eqLogic::byType($plugin->getId());
 																<td><label class="control-label">{{Déclencheur}}</label></td>
 																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="et'.$i.'">
 																		<option value="">Désactivé</option>
-																		<option value="2">Mouvement (Fenêtre n°1)</option>
-																		<option value="10">Mouvement (Fenêtre n°2)</option>
-																		<option value="11">Mouvement (Fenêtre n°3)</option>
-																		<option value="12">Mouvement (Fenêtre n°4)</option>
+																		<option value="2">Mouvement (toutes fenêtres actives)</option>
 																		<option value="3">PIR</option>
 																		<option value="4">Audio</option>
 																		<option value="5">Requête HTTP</option>
 																		<option value="6">Périodique</option>
 																		<option value="7">Continu</option>
+																		<option value="10">Mouvement (Fenêtre n°2)</option>
+																		<option value="11">Mouvement (Fenêtre n°3)</option>
+																		<option value="12">Mouvement (Fenêtre n°4)</option>
+																		<option value="0">Input 0</option>
+																		<option value="1">Input 1</option>
+																		<option value="8">Input 2</option>
+																		<option value="9">Input 3</option>
+																		<option value="13">Audio 2</option>
+																		<option value="14">Audio 3</option>
+																		<option value="15">Audio 4</option>
 																	</select>
 																</td>
 														</tr>
@@ -344,7 +360,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 																</td>
 														</tr>
 														<tr style="height: 50px !important;">
-															<td><label class="control-label">{{Intervalle}}</label></td>
+															<td><label class="control-label">{{Intervalle}}</label>&nbsp;{{(en min, avant de détecter un nouvel évènement)}}</td>
 															<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ei'.$i.'">
 																		';
 																		for ($l = 0; $l <= 5; $l++) {
@@ -354,7 +370,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 															</td>
 														</tr>
 														<tr style="height: 50px !important;">
-															<td><label class="control-label">{{Fichier}}</label></td>
+															<td><label class="control-label">{{Type de fichier attaché}}</label></td>
 															<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ea'.$i.'">
 																			<option value="mp4">MP4</option>
 																			<option value="avi">AVI</option>
@@ -363,8 +379,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
 															</td>
 													</tr>
 													<tr style="height: 50px !important;">
-															<td><label class="control-label">{{Durée avant}}</td>
-															<td></label><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="timebefore'.$i.'">
+															<td><label class="control-label">{{Pré-capture}}</label>&nbsp;{{(durée en secondes avant l\'évènement)}}</td>
+															<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="timebefore'.$i.'">
 																		';
 																		for ($l = 0; $l <= 15; $l++) {
 																				echo "<option value=\"$l\">$l</option>";
@@ -372,8 +388,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
 															echo '</select></td>
 													</tr>
 													<tr style="height: 50px !important;">
-															<td><label class="control-label">{{Durée après}}</td>
-															<td></label><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="timeafter'.$i.'">
+															<td><label class="control-label">{{Post-capture}}</label>&nbsp;{{(durée en secondes après l\'évènement)}}</td>
+															<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="timeafter'.$i.'">
 																		';
 																		for ($l = 0; $l <= 15; $l++) {
 																				echo "<option value=\"$l\">$l</option>";
@@ -381,7 +397,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 															echo '</select></td>
 													</tr>
 													<tr style="height: 50px !important;">
-															<td><label class="control-label">{{Paramètre IS}}</td>
+															<td><label class="control-label">{{Paramètre IS ?}}</td>
 															<td></label><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="is'.$i.'">
 																		';
 																		for ($l = 0; $l <= 5; $l++) {
@@ -453,7 +469,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 																<td><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="http_notify" /></td>
 														</tr>
 														<tr>
-																<td><label class="control-label">{{URL d'envoie de la notification (n'accepte pas HTTPS)}}</label></td>
+																<td><label class="control-label">{{URL d'envoie de la notification}}</label>&nbsp;{{(n'accepte pas https)}}</td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_url" placeholder="{{http://my-url-to-notify.com}}"/></td>
 														</tr>
 														<tr>
@@ -466,27 +482,27 @@ $eqLogics = eqLogic::byType($plugin->getId());
 																</td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Login (optionnel)}}</label></td>
+																<td><label class="control-label ">{{Login}}</label>&nbsp;{{(optionnel)}}</td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_user"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Mot de passe (optionnel)}}</label></td>
+																<td><label class="control-label ">{{Mot de passe}}</label>&nbsp;{{(optionnel)}}</td>
 																<td><input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_password"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Proxy (optionnel)}}</label></td>
+																<td><label class="control-label ">{{Proxy}}</label>&nbsp;{{(optionnel)}}</td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_proxy"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Port Proxy (optionnel)}}</label></td>
+																<td><label class="control-label ">{{Port Proxy}}</label>&nbsp;{{(optionnel)}}</td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_proxy_no"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Login proxy (optionnel)}}</label></td>
+																<td><label class="control-label ">{{Login proxy}}</label>&nbsp;{{(optionnel)}}</td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="proxy_user"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Mot de passe proxy (optionnel)}}</label></td>
+																<td><label class="control-label ">{{Mot de passe proxy}}</label>&nbsp;{{(optionnel)}}</td>
 																<td><input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="proxy_password"/></td>
 														</tr>
 												</tbody>
@@ -536,11 +552,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
 										<table class="table table-bordered table-condensed" style="text-align:center">
 												<tbody>
 														<tr style="height: 50px !important;">
-																<td><label class="control-label">{{Requète HTTP entrante (pour déclencher un enregistrement)}}</label></td>
+																<td><label class="control-label">{{Requète HTTP entrante}}</label>&nbsp;{{(pour déclencher un enregistrement)}}</td>
 																<td><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="http_event_en" /></td>
 														</tr>
 														<tr style="height: 50px !important;">
-																<td><label class="control-label">{{HTTP POST (envoi des enregistrements à une URL)}}</label></td>
+																<td><label class="control-label">{{HTTP POST}}</label>&nbsp;{{(envoi des enregistrements à une URL)}}</td>
 																<td><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="http_post_en" /></td>
 														</tr>
 														<tr>
@@ -548,11 +564,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_post_url"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Login (optionnel)}}</label></td>
+																<td><label class="control-label ">{{Login}}</label>&nbsp;{{(optionnel)}}</td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_post_user"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Mot de passe (optionnel)}}</label></td>
+																<td><label class="control-label ">{{Mot de passe}}</label>&nbsp;{{(optionnel)}}</td>
 																<td><input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="http_post_pass"/></td>
 														</tr>
 												</tbody>
@@ -934,7 +950,7 @@ MAIL Notif
 											<?php
 											for ($i = 1; $i <= 4; $i++) {
 													echo '<legend>
-													<span>{{Fenetre de détection n°'.$i.'}}</span>
+													<span>{{Fenêtre de détection n°'.$i.'}}</span>
 											</legend>
 											<table class="table table-bordered table-condensed" style="text-align:center">
 													<tbody>
@@ -944,30 +960,33 @@ MAIL Notif
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_name'.$i.'"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label">{{Coordonnées fenêtre de détection}}</label></td>
+																<td><label class="control-label">{{Coordonnées fenêtre}}</label>&nbsp;(X1,Y1,X2,Y2 sur 640*480)</td>
 																<td></td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_window'.$i.'"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Valeur ABS fenêtre}}</label></td>
+																<td><label class="control-label ">{{Coordonnées fenêtre absolue}}</label>&nbsp;(X1,Y1,X2,Y2 /résolution)</td>
 																<td></td>
 																<td><input type="text" id="md_abs_window1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_abs_window'.$i.'"/></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Sensibilité (0-10)}}</label></td>
+																<td><label class="control-label ">{{Sensibilité}}</label>&nbsp;(peu sensible 0 - très sensible 10)</td>
 																<td align = "right"><output id="md_sensitivity'.$i.'_val">-</output></td>
 																<td><input type="range" min="0" max="10" step="1" oninput="md_sensitivity'.$i.'_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity'.$i.'"></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Seuil (1-255)}}</label></td>
+																<td><label class="control-label ">{{Seuil / Précisions}}</label>&nbsp;(peu précis 0 - très précis 255)</td>
 																<td align = "right"><output id="md_threshold'.$i.'_val">-</output></td>
 																<td><input type="range" min="0" max="255" step="1" oninput="md_threshold'.$i.'_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_threshold'.$i.'"></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Fréquence de détection}}</label></td>
+																<td><label class="control-label ">{{Fréquence de détection ?}}</label></td>
 																<td></td>
 																<td>
 																		<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_update_freq'.$i.'">
+																				<option value="15">15</option>
+																				<option value="30">30</option>
+																				<option value="60">60</option>
 																				<option value="90">90</option>
 																		</select>
 																</td>
@@ -1052,22 +1071,27 @@ MAIL Notif
 												<tbody>
 														<tr style="height: 50px !important;">
 																<td><label class="control-label">{{Activer microphone}}</label></td>
+																<td></td>
 																<td><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="audio_in" /></td>
 														</tr>
 														<tr style="height: 50px !important;">
 																<td><label class="control-label">{{Déctection de bruit}}</label></td>
+																<td></td>
 																<td><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="au_trigger_en" /></td>
 														</tr>
 														<tr>
-																<td><label class="control-label">{{Volume de détection}}</label></td>
-																<td><input type="range" min="0" max="100" step="1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="in_volume"></td>
+																<td><label class="control-label">{{Volume d'entrée du microphone}}</label>&nbsp;(0 - 100)</td>
+																<td align = "right"><output id="in_volume_val">-</output></td>
+																<td><input type="range" min="0" max="100" step="1" oninput="in_volume_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="in_volume"></td>
 														</tr>
 														<tr>
-																<td><label class="control-label">{{Sensibilité de détection}}</label></td>
-																<td><input type="range" min="2" max="50" step="2" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="au_trigger_volume"></td>
+																<td><label class="control-label">{{Sensibilité de détection}}</label>&nbsp;(très sensible 2 - peu sensible 40)</td>
+																<td align = "right"><output id="au_trigger_volume_val">-</output></td>
+																<td><input type="range" min="2" max="40" step="2" oninput="au_trigger_volume_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="au_trigger_volume"></td>
 														</tr>
 														<tr>
 																<td><label class="control-label">{{Déclencheur audio}}</label></td>
+																<td></td>
 																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="au_trigger_method">
 																			<option value="0">Lorsqu'il y a un bruit</option>
 																			<option value="1">Lorsqu'il n'y a plus de bruit</option>
@@ -1176,27 +1200,27 @@ MAIL Notif
 																	</select></td>
 														</tr>
 														<tr>
-																<td><label class="control-label">{{Exposition}}</label></td>
+																<td><label class="control-label">{{Exposition}}</label>&nbsp;(min 1 - max 7)</td>
 																<td align = "right"><output id="exposure_val">-</output></td>
 																<td><input type="range" min="1" max="7" step="1" oninput="exposure_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="exposure"></td>
 														</tr>
 														<tr>
-																<td><label class="control-label">{{Netteté}}</label></td>
+																<td><label class="control-label">{{Netteté}}</label>&nbsp;(min 1 - max 7)</td>
 																<td align = "right"><output id="sharpness_val">-</output></td>
 																<td><input type="range" min="1" max="7" step="1" oninput="sharpness_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="sharpness"></td>
 														</tr>
 														<tr>
-																<td><label class="control-label">{{Hue}}</label></td>
+																<td><label class="control-label">{{Hue}}</label>&nbsp;(min 1 - max 7)</td>
 																<td align = "right"><output id="hue_val">-</output></td>
 																<td><input type="range" min="1" max="7" step="1" oninput="hue_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hue"></td>
 														</tr>
 														<tr>
-																<td><label class="control-label">{{Saturation}}</label></td>
+																<td><label class="control-label">{{Saturation}}</label>&nbsp;(min 1 - max 7)</td>
 																<td align = "right"><output id="saturation_val">-</output></td>
 																<td><input type="range" min="1" max="7" step="1" oninput="saturation_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="saturation"></td>
 														</tr>
 														<tr>
-																<td><label class="control-label">{{Contraste}}</label></td>
+																<td><label class="control-label">{{Contraste}}</label>&nbsp;(min 1 - max 7)</td>
 																<td align = "right"><output id="contrast_val">-</output></td>
 																<td><input type="range" min="1" max="7" step="1" oninput="contrast_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="contrast"></td>
 														</tr>
@@ -1220,17 +1244,17 @@ MAIL Notif
 																	</select></td>
 														</tr>
 														<tr>
-																<td><label class="control-label">{{Seuil Jour}}</label></td>
+																<td><label class="control-label">{{Seuil jour}}</label>&nbsp;(45 - lumineux 80)</td>
 																<td align = "right"><output id="daylevel_val">-</output></td>
 																<td><input type="range" min="45" max="80" step="5" oninput="daylevel_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="daylevel"></td>
 														</tr>
 														<tr>
-																<td><label class="control-label">{{Seuil Nuit}}</label></td>
+																<td><label class="control-label">{{Seuil nuit}}</label>&nbsp;(sombre 5 - 40)</td>
 																<td align = "right"><output id="nightlevel_val">-</output></td>
-																<td><input type="range" min="5" max="45" step="5" oninput="nightlevel_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="nightlevel"></td>
+																<td><input type="range" min="5" max="40" step="5" oninput="nightlevel_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="nightlevel"></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Délai changement nuit/jour}}</label></td>
+																<td><label class="control-label ">{{Interval nuit/jour}}</label></td>
 																<td></td>
 																<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="dn_interval">
 																	<?php for ($i = 0; $i <= 10; $i++) {
@@ -1238,11 +1262,11 @@ MAIL Notif
 																	}?>
 																	</select></td>
 														</tr>
-														<tr>
+														<!--<tr>
 																<td><label class="control-label">{{Seuil Jour/Nuit}}</label></td>
 																<td></td>
 																<td><input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="dn_threshold"/></td>
-														</tr>
+														</tr>-->
 												</tbody>
 										</table>
 								</div>
@@ -1646,7 +1670,7 @@ MAIL Notif
 						return;
 					}
 					$('#div_alert').showAlert({message: '{{OK configuration envoyé avec succès}}', level: 'success'});
-					window.location.reload();
+					//window.location.reload();
 				}
 			});
 		}

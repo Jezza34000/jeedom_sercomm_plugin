@@ -55,10 +55,10 @@ try {
         $ParamTOconfigure = $camera->getParamToConfigure($cfgGroup);
         $res = $camera->WriteConfig($cfgGroup, $ParamTOconfigure);
       }
-      if ($res == true) {
+      if ($res[0] == 200) {
         ajax::success();
       } else {
-        throw new Exception(__('Echec du paramétrage de la caméra (HTTP code : '.$res.')', __FILE__));
+        throw new Exception(__('Echec du paramétrage de la caméra (http code : '.$res[0].', réponse caméra : '.$res[1].')', __FILE__));
       }
     }
 
@@ -68,10 +68,10 @@ try {
         throw new Exception(__('Impossible de trouver la caméra : ' . init('id'), __FILE__));
       }
       $res = $camera->ReadConfig('adm/get_group.cgi?group='.init('group'));
-      if ($res === true) {
+      if ($res == 200) {
         ajax::success();
       } else {
-        throw new Exception(__('Echec de la récupéaration de la configuration de la caméra (HTTP code : '.$res.')', __FILE__));
+        throw new Exception(__('Echec de la récupération de la configuration de la caméra (HTTP code : '.$res.')', __FILE__));
       }
     }
 
