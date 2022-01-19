@@ -1244,12 +1244,12 @@ MAIL Notif
 																	</select></td>
 														</tr>
 														<tr>
-																<td><label class="control-label">{{Seuil jour}}</label>&nbsp;(45 - lumineux 80)</td>
+																<td><label class="control-label">{{Seuil jour}}</label>&nbsp;(35 - lumineux 80)</td>
 																<td align = "right"><output id="daylevel_val">-</output></td>
 																<td><input type="range" min="45" max="80" step="5" oninput="daylevel_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="daylevel"></td>
 														</tr>
 														<tr>
-																<td><label class="control-label">{{Seuil nuit}}</label>&nbsp;(sombre 5 - 40)</td>
+																<td><label class="control-label">{{Seuil nuit}}</label>&nbsp;(sombre 5 - 30)</td>
 																<td align = "right"><output id="nightlevel_val">-</output></td>
 																<td><input type="range" min="5" max="40" step="5" oninput="nightlevel_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="nightlevel"></td>
 														</tr>

@@ -25,9 +25,9 @@ class sercomm extends eqLogic {
      $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
      $result = array($httpcode, $server_output, $curlError);
      if ($httpcode == 200) {
-       log::add('sercomm', 'debug', 'HTTP OK (200) ='.$server_output, true);
+       log::add('sercomm', 'debug', 'HTTP OK (code 200)='.$server_output, true);
      } else {
-       log::add('sercomm', 'debug', 'HTTP NOK ('.$httpcode.') Curl ERR='.curl_error($ch));
+       log::add('sercomm', 'debug', 'HTTP NOK (code '.$httpcode.') Curl ERR='.curl_error($ch));
      }
      return $result;
      curl_close($ch);
@@ -473,7 +473,6 @@ class sercommCmd extends cmd {
                 $ParamTOconfigure = $camera->getParamToConfigure($cfgGroup);
                 $res = $camera->WriteConfig($cfgGroup, $ParamTOconfigure);
                 if ($res[1] == "OK") {
-
                 } else {
                  throw new Exception(__('Impossible de configurer la caméra', __FILE__));
                 }
