@@ -67,6 +67,7 @@ class sercomm extends eqLogic {
               $dnvalues = explode(",", $value);
               $this->setConfiguration("nightlevel", $dnvalues[0]);
               $this->setConfiguration("daylevel", $dnvalues[1]);
+              $this->save();
           }
 
 
