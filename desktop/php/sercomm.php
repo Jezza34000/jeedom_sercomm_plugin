@@ -237,35 +237,56 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								<div class="col-sm-7">
 									<span class="eqLogicAttr" data-l1key="configuration" data-l2key="mic_in"></span>
 								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-3 control-label"> {{Hautparleur}}</label>
 								<div class="col-sm-7">
 									<span class="eqLogicAttr" data-l1key="configuration" data-l2key="speaker_out"></span>
 								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-3 control-label"> {{Led blanche}}</label>
 								<div class="col-sm-7">
 									<span class="eqLogicAttr" data-l1key="configuration" data-l2key="wlled"></span>
 								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-3 control-label"> {{Led infra-rouge}}</label>
 								<div class="col-sm-7">
 									<span class="eqLogicAttr" data-l1key="configuration" data-l2key="irled"></span>
 								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-3 control-label"> {{Port série}}</label>
 								<div class="col-sm-7">
 									<span class="eqLogicAttr" data-l1key="configuration" data-l2key="serial"></span>
 								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-3 control-label"> {{IO}}</label>
 								<div class="col-sm-7">
 									<span class="eqLogicAttr" data-l1key="configuration" data-l2key="ioctrl"></span>
 								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-3 control-label"> {{PT}}</label>
 								<div class="col-sm-7">
 									<span class="eqLogicAttr" data-l1key="configuration" data-l2key="ptctrl"></span>
 								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-3 control-label"> {{Bouton de confidentialité}}</label>
 								<div class="col-sm-7">
 									<span class="eqLogicAttr" data-l1key="configuration" data-l2key="privacy_button"></span>
 								</div>
 							</div>
+							<hr>
+								<div class="container-fluid">
+										<div class="form-group">
+												<a class="btn btn-block btn-primary eqLogicAction" id="btGetCamNFO"><i class="fas fa-download"></i> {{Récupérer les informations}}</a>
+										</div>
+										<br>
+								</div>
 						</div>
 					</fieldset>
 				</form>
@@ -1650,6 +1671,30 @@ MAIL Notif
           }
         });
     });
+
+		$('#btGetCamNFO').on('click', function () {
+				$.ajax({// fonction permettant de faire de l'ajax
+						type: "POST", // methode de transmission des données au fichier php
+						url: "plugins/sercomm/core/ajax/sercomm.ajax.php", // url du fichier php
+						data: {
+							action: "CheckConnexion",
+							id : $('.eqLogicAttr[data-l1key=id]').value()
+						},
+						dataType: 'json',
+						error: function (request, status, error) {
+							handleAjaxError(request, status, error);
+						},
+						success: function (data) { // si l'appel a bien fonctionné
+						if (data.state != 'ok') {
+							$('#div_alert').showAlert({message: data.result, level: 'danger'});
+							return;
+						}
+						$('#div_alert').showAlert({message: '{{Information récupérer avec succès}}', level: 'success'});
+						window.location.reload();
+					}
+				});
+		});
+
 		/* Actions des boutons sur la page */
 		function SetCAMconfig(REQgroup){
 			$.ajax({// fonction permettant de faire de l'ajax

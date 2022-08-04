@@ -1,13 +1,13 @@
 {
 	"id" : "sercomm",
-	"name" : "Sercomm CAM API config",
+	"name" : "Sercomm",
 	"description" : {
 		"fr_FR": "Plugin permettant l'accès à la configuration complètes des caméras IP de la marque blanche SERCOMM. Commercialisé notamment par : -SFR avec Homescope & Home By SFR -Free et son pack sécurtié de la Freebox Delta -Orange avec HomeLive. Avec ce plugin vous aurez accès à toute l'API construcuteur."
 	},
 	"licence" : "AGPL",
 	"author" : "Jeedom SAS",
 	"require" : "3.3.39",
-	"category" : "devicecommunication",
+	"category" : "security",
 	"hasDependency" : false,
 	"hasOwnDeamon" : false,
 	"maxDependancyInstallTime" : 0,

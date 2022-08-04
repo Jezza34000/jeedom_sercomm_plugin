@@ -30,11 +30,12 @@ try {
   */
     ajax::init();
 
+    $camera = sercomm::byId(init('id'));
+    if (!is_object($camera)) {
+      throw new Exception(__('Impossible de trouver la caméra : ' . init('id'), __FILE__));
+    }
+
     if (init('action') == 'CheckConnexion') {
-        $camera = sercomm::byId(init('id'));
-        if (!is_object($camera)) {
-          throw new Exception(__('Impossible de trouver la caméra : ' . init('id'), __FILE__));
-        }
         $res = $camera->ReadConfig("util/query.cgi?extension=yes");
         if ($res == 200) {
           ajax::success();
@@ -44,10 +45,6 @@ try {
     }
 
     if (init('action') == 'SetCAMConfig') {
-      $camera = sercomm::byId(init('id'));
-      if (!is_object($camera)) {
-        throw new Exception(__('Impossible de trouver la caméra : ' . init('id'), __FILE__));
-      }
       $cfgGroup = init('group');
       if ($cfgGroup == 'EVENT'){
         $res = $camera->WriteEventParam();
@@ -63,10 +60,6 @@ try {
     }
 
     if (init('action') == 'GetCAMConfig') {
-      $camera = sercomm::byId(init('id'));
-      if (!is_object($camera)) {
-        throw new Exception(__('Impossible de trouver la caméra : ' . init('id'), __FILE__));
-      }
       $res = $camera->ReadConfig('adm/get_group.cgi?group='.init('group'));
       if ($res == 200) {
         ajax::success();

@@ -55,6 +55,11 @@ class sercomm extends eqLogic {
        	  $key = trim($info[0]);
        	  $value = trim($info[1]);
           log::add('sercomm', 'debug', "Key ($key) value : $value");
+          // replace value more readable
+          $sercomm_data = array("on", "off");
+          $human_readable = array("Oui", "-");
+          $value = str_replace($sercomm_data, $human_readable, $value);
+
 
           if(strpos($key, "passw") == 0 ){
               $this->setConfiguration($key, $value);
