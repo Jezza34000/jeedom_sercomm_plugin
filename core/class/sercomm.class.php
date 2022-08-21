@@ -55,11 +55,13 @@ class sercomm extends eqLogic {
        	  $key = trim($info[0]);
        	  $value = trim($info[1]);
           log::add('sercomm', 'debug', "Key ($key) value : $value");
-          // replace value more readable
-          $sercomm_data = array("on", "off");
-          $human_readable = array("Oui", "-");
-          $value = str_replace($sercomm_data, $human_readable, $value);
 
+          // replace value more readable
+          if ($URLtoRead == "/util/query.cgi?extension=yes") {
+            $sercomm_data = array("on", "off");
+            $human_readable = array("Oui", "-");
+            $value = str_replace($sercomm_data, $human_readable, $value);
+          }
 
           if(strpos($key, "passw") == 0 ){
               $this->setConfiguration($key, $value);
@@ -118,10 +120,10 @@ class sercomm extends eqLogic {
 
 
    public function WriteEventParam() {
-     $SetGroup = true;
      /*
         is=1|es=0,|et=2|acts=op1:0;op2:0;email:1;ftpu:0;im:0;httpn:1;httppost:1;wlled:0;smbc:0;sd:0;op3:0;op4:0;smbc_rec:0;sd_rec:0|ei=0|ea=mp4,2,13,1|en=event_motion
     */
+    $urlparam = "";
       for ($i=1; $i<=6; $i++) {
         $et = $this->getConfiguration('et'.$i); //Event Trigger
         if ($et != "") {
@@ -139,26 +141,24 @@ class sercomm extends eqLogic {
 
           $timebefore = $this->getConfiguration('timebefore'.$i);
           $timeafter = $this->getConfiguration('timeafter'.$i);
+          $quality = $this->getConfiguration('quality'.$i);
 
-          $cfgstr = "is=$is|es=$es,|et=$et|acts=op1:0;op2:0;email:$email;ftpu:$ftpu;im:0;httpn:$httpn;httppost:$httppost;wlled:0;smbc:0;sd:0;op3:0;op4:0;smbc_rec:0;sd_rec:0|ei=$ei|ea=$ea,$timebefore,$timeafter,1|en=$en";
-          log::add('sercomm', 'debug', 'Event STR to cfg ='.$cfgstr, true);
-        } else {
-          // Erase Trigger
-          $cfgstr = "";
+          $cfgstr = "is=$is|es=$es,|et=$et|acts=op1:0;op2:0;email:$email;ftpu:$ftpu;im:0;httpn:$httpn;httppost:$httppost;wlled:0;smbc:0;sd:0;op3:0;op4:0;smbc_rec:0;sd_rec:0|ei=$ei|ea=$ea,$timebefore,$timeafter,$quality|en=$en";
+          log::add('sercomm', 'debug', '&event'. $i . '_entry=' . $cfgstr, true);
+          $urlparam = $urlparam . "&event" . $i . "_entry=" . urlencode($cfgstr);
         }
         // Send URL
-        $res = sercomm::ExecURL("adm/set_group.cgi?group=EVENT&event".$i."_entry=".urlencode($cfgstr));
-        log::add('sercomm', 'debug', 'Cfg URL = adm/set_group.cgi?group=EVENT&event'.$i.'_entry='.$cfgstr, true);
+        $res = sercomm::ExecURL("adm/set_group.cgi?group=EVENT" . $urlparam);
+      }
+        log::add('sercomm', 'debug', 'Cfg URL = adm/set_group.cgi?group=EVENT' . $urlparam, true);
           if ($res[0] == 200) {
             // Pass OK
-            log::add('sercomm', 'debug', 'event'.$i.'_entry > SET OK', true);
+            log::add('sercomm', 'debug', 'event > SET OK', true);
           } else {
             // Pass NOK
-            $SetGroup = false;
-            log::add('sercomm', 'debug', 'event'.$i.'_entry > Error set NOK', true);
+            log::add('sercomm', 'debug', 'event > Error set NOK', true);
           }
-      }
-      return $SetGroup;
+      return $res;
    }
 
 
@@ -478,7 +478,7 @@ class sercommCmd extends cmd {
                 $cfgGroup = $_options['select'];
                 $ParamTOconfigure = $camera->getParamToConfigure($cfgGroup);
                 $res = $camera->WriteConfig($cfgGroup, $ParamTOconfigure);
-                if ($res[1] == "OK") {
+                if ($res[0] == 200) {
                 } else {
                  throw new Exception(__('Impossible de configurer la caméra', __FILE__));
                 }

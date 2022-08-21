@@ -381,13 +381,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
 																</td>
 														</tr>
 														<tr style="height: 50px !important;">
-															<td><label class="control-label">{{Intervalle}}</label>&nbsp;{{(en min, avant de détecter un nouvel évènement)}}</td>
-															<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ei'.$i.'">
-																		';
-																		for ($l = 0; $l <= 5; $l++) {
-																				echo "<option value=\"$l\">$l</option>";
-																		};
-																	echo '</select>
+															<td><label class="control-label">{{Intervalle}}</label>&nbsp;{{(en secondes, avant de détecter un nouvel évènement)}}</td>
+															<td><input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="ei'.$i.'" /></td>
 															</td>
 														</tr>
 														<tr style="height: 50px !important;">
@@ -418,10 +413,19 @@ $eqLogics = eqLogic::byType($plugin->getId());
 															echo '</select></td>
 													</tr>
 													<tr style="height: 50px !important;">
+															<td><label class="control-label">{{Qualité}}</label></td>
+															<td><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="quality'.$i.'">
+																		';
+																		for ($l = 1; $l <= 5; $l++) {
+																				echo "<option value=\"$l\">$l</option>";
+																		};
+															echo '</select></td>
+													</tr>
+													<tr style="height: 50px !important;">
 															<td><label class="control-label">{{Paramètre IS ?}}</td>
 															<td></label><select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="is'.$i.'">
 																		';
-																		for ($l = 0; $l <= 5; $l++) {
+																		for ($l = 0; $l <= 4; $l++) {
 																				echo "<option value=\"$l\">$l</option>";
 																		};
 															echo '</select></td>
