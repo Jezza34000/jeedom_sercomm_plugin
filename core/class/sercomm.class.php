@@ -352,6 +352,26 @@ class sercomm extends eqLogic {
       $Order++;
 
       $sercommCmd = new sercommCmd();
+      $sercommCmd->setName(__('Led état OFF', __FILE__));
+      $sercommCmd->setEqLogic_id($this->id);
+      $sercommCmd->setType('action');
+      $sercommCmd->setSubType('other');
+      $sercommCmd->setLogicalId('ledoff');
+      $sercommCmd->setOrder($Order);
+      $sercommCmd->save();
+      $Order++;
+
+      $sercommCmd = new sercommCmd();
+      $sercommCmd->setName(__('Led état ON', __FILE__));
+      $sercommCmd->setEqLogic_id($this->id);
+      $sercommCmd->setType('action');
+      $sercommCmd->setSubType('other');
+      $sercommCmd->setLogicalId('ledon');
+      $sercommCmd->setOrder($Order);
+      $sercommCmd->save();
+      $Order++;
+
+      $sercommCmd = new sercommCmd();
       $sercommCmd->setName(__('Envoyer la config', __FILE__));
       $sercommCmd->setEqLogic_id($this->id);
       $sercommCmd->setType('action');
@@ -472,6 +492,20 @@ class sercommCmd extends cmd {
                 if ($res[1] == "OK") {
                 } else {
                   throw new Exception(__('Erreur ordre non envoyé', __FILE__));
+                }
+                break;
+          case 'ledoff':
+               $res = $camera->ExecURL("adm/set_group.cgi?group=SYSTEM&led_mode=0");
+               if ($res[1] == "OK") {
+               } else {
+                 throw new Exception(__('Impossible de configurer la LED', __FILE__));
+               }
+               break;
+           case 'ledon':
+                $res = $camera->ExecURL("adm/set_group.cgi?group=SYSTEM&led_mode=1");
+                if ($res[1] == "OK") {
+                } else {
+                  throw new Exception(__('Impossible de configurer la LED', __FILE__));
                 }
                 break;
             case 'sendparam':
