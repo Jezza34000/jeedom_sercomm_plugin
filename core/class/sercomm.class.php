@@ -18,7 +18,9 @@ class sercomm extends eqLogic {
      log::add('sercomm', 'debug', 'Exec URL=http://'.$adresseIP.'/'.$urltoSend, true);
      $ch = curl_init();
      curl_setopt($ch, CURLOPT_URL, "http://".$adresseIP."/".$urltoSend);
-     curl_setopt($ch, CURLOPT_USERPWD, $username.":".$password);
+     if ($username != "") {
+            curl_setopt($ch, CURLOPT_USERPWD, $username.":".$password);
+     }
      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
      $server_output = curl_exec($ch);
      $curlError = curl_error($ch);

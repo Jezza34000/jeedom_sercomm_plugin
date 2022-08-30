@@ -1000,22 +1000,24 @@ MAIL Notif
 																<td><input type="range" min="0" max="10" step="1" oninput="md_sensitivity'.$i.'_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_sensitivity'.$i.'"></td>
 														</tr>
 														<tr>
-																<td><label class="control-label ">{{Seuil / Précisions}}</label>&nbsp;(peu précis 0 - très précis 255)</td>
-																<td align = "right"><output id="md_threshold'.$i.'_val">-</output></td>
-																<td><input type="range" min="0" max="255" step="1" oninput="md_threshold'.$i.'_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_threshold'.$i.'"></td>
-														</tr>
-														<tr>
-																<td><label class="control-label ">{{Fréquence de détection ?}}</label></td>
-																<td></td>
-																<td>
-																		<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_update_freq'.$i.'">
-																				<option value="15">15</option>
-																				<option value="30">30</option>
-																				<option value="60">60</option>
-																				<option value="90">90</option>
-																		</select>
-																</td>
-														</tr>
+															<td><label class="control-label ">{{Seuil de détection}}</label>&nbsp;(très bas 0 - très haut 255)</td>
+															<td align = "right"><output id="md_threshold'.$i.'_val">-</output></td>
+															<td><input type="range" min="0" max="255" step="1" oninput="md_threshold'.$i.'_val.value = this.value" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_threshold'.$i.'"></td>
+													</tr>
+													<tr>
+															<td><label class="control-label ">{{Fréquence de détection}}</label></td>
+															<td></td>
+															<td>
+																	<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="md_update_freq'.$i.'">
+																			<option value="10">10</option>
+																			<option value="30">30</option>
+																			<option value="50">50</option>
+																			<option value="70">70</option>
+																			<option value="90">90</option>
+																			<option value="100">100</option>
+																	</select>
+															</td>
+													</tr>
 												</tbody>
 										</table>';}?>
 								</div>

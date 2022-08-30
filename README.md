@@ -7,11 +7,14 @@ Plus connu sous les marques suivantes :
 SFR ayant doté son firmware d'un VPN la caméra n'est pas capable de communiquer avec l'extérieur, les notifications HTTP, et POST HTTP ne sont pas fonctionnel)
 - FREE (Sercomm RC8310) dans la gamme : Freebox Delta
 - ORANGE (Sercomm RC8110) dans la gamme : HomeLive
+- VERA (Sercomm RC8110) avec la VistaCam700
 
 # Accès administrateur aux caméras
 
 - SFR = login : administrator mot de passe : cgiconfig
 - FREE = login : freeboxcam mot de passe : disponible dans l'application Freebox Home
+- ORANGE = login & mot de passe vide.
+- VERA = login & mot de passe vide.
 
 Ce plugin utilise l'API officiel du constructeur pour accéder et modifier les paramètres non accessibles via l'interface officiel du revendeur.
 
