@@ -398,12 +398,6 @@ class sercomm extends eqLogic {
 
  // Fonction exécutée automatiquement avant la mise à jour de l'équipement
     public function preUpdate() {
-      if ($this->getConfiguration('password') == '') {
-        throw new Exception(__('Le mot de passe ne peut pas être vide', __FILE__));
-      }
-      if ($this->getConfiguration('adresseip') == '') {
-        throw new Exception(__('L\'adresse IP de la caméra est obligatoire', __FILE__));
-      }
     }
 
  // Fonction exécutée automatiquement après la mise à jour de l'équipement
